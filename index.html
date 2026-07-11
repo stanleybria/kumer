@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Perangkat Ajar Kurikulum Merdeka — SMA</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root{
+  --ink:#161B2E;
+  --navy:#1D2A4D;
+  --navy-2:#2A3A66;
+  --paper:#FFFFFF;
+  --bg:#EEF1F6;
+  --line:#DDE2EC;
+  --gold:#B8862E;
+  --gold-soft:#F4E8D2;
+  --green:#1F6F50;
+  --muted:#6B7280;
+  --danger:#B3432D;
+  --radius:12px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{ font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--ink); }
+button,input,select,textarea{ font-family:inherit; }
+
+.app{ display:flex; min-height:100vh; background:var(--bg); }
+
+/* ---------- Sidebar ---------- */
+.sidebar{
+  width:250px; flex-shrink:0; background:linear-gradient(180deg,var(--navy) 0%,#141C36 100%);
+  color:#fff; display:flex; flex-direction:column; padding:22px 16px; position:sticky; top:0; height:100vh; z-index:25;
+}
+.brand{ display:flex; align-items:center; gap:10px; padding:6px 8px 22px; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:14px; }
+.brand-mark{ width:34px; height:34px; border-radius:9px; background:var(--gold); display:flex; align-items:center; justify-content:center; color:#1a1206; flex-shrink:0;}
+.brand-mark svg{ width:19px; height:19px; }
+.brand-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; line-height:1.15; }
+.brand-sub{ font-size:11px; color:rgba(255,255,255,0.6); letter-spacing:.03em; }
+.sidebar nav{ display:flex; flex-direction:column; gap:3px; flex:1; overflow-y:auto; }
+.nav-item{ display:flex; align-items:center; gap:10px; padding:10px 10px; border:none; background:transparent; color:rgba(255,255,255,0.75); border-radius:9px; cursor:pointer; font-size:13.5px; font-weight:500; text-align:left; width:100%; }
+.nav-item svg{ width:17px; height:17px; flex-shrink:0; }
+.nav-item span{ flex:1; }
+.nav-item .chev{ opacity:0; transition:opacity .15s; width:14px; height:14px; }
+.nav-item:hover{ background:rgba(255,255,255,0.06); color:#fff; }
+.nav-item.active{ background:var(--gold); color:#1a1206; }
+.nav-item.active .chev{ opacity:1; }
+.sidebar-foot{ font-size:11px; color:rgba(255,255,255,0.4); padding:10px 8px 0; border-top:1px solid rgba(255,255,255,0.12); margin-top:10px; }
+.scrim{ position:fixed; inset:0; background:rgba(10,14,28,0.5); z-index:20; }
+.mobile-nav-btn{ display:none; }
+
+/* ---------- Main ---------- */
+.main{ flex:1; min-width:0; padding:34px 40px 80px; }
+.view{ max-width:1000px; margin:0 auto; }
+.view-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:22px; flex-wrap:wrap; }
+.eyebrow{ font-size:11px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+.view h2{ font-family:'Fraunces',serif; font-size:28px; font-weight:600; margin:0 0 8px; color:var(--navy); }
+.lead{ color:var(--muted); font-size:14px; max-width:60ch; line-height:1.55; margin:0; }
+.view-head-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+
+/* ---------- Buttons ---------- */
+.btn{ display:inline-flex; align-items:center; gap:7px; border-radius:9px; padding:9px 15px; font-size:13.5px; font-weight:600; border:1px solid transparent; cursor:pointer; }
+.btn svg{ width:15px; height:15px; }
+.btn-primary{ background:var(--navy); color:#fff; }
+.btn-primary:hover{ background:var(--navy-2); }
+.btn-outline{ background:#fff; border-color:var(--line); color:var(--navy); margin-top:10px; }
+.btn-outline:hover{ border-color:var(--navy); }
+.btn-ghost{ background:transparent; border-color:currentColor; color:var(--navy); padding:6px 12px; font-size:12.5px; }
+.icon-btn{ border:none; background:#F1F3F8; border-radius:7px; padding:6px; cursor:pointer; display:flex; color:var(--navy); }
+.icon-btn svg{ width:15px; height:15px; }
+.icon-btn:hover{ background:#e4e8f2; }
+.icon-btn.danger{ color:var(--danger); }
+.icon-btn.danger:hover{ background:#FBE7E1; }
+.icon-btn.xs{ padding:4px; }
+.icon-btn.xs svg{ width:12px; height:12px; }
+
+/* ---------- Notice / stats ---------- */
+.notice{ display:flex; align-items:center; gap:10px; background:#FFF6E8; border:1px solid var(--gold-soft); color:#6B4E17; padding:12px 14px; border-radius:10px; font-size:13px; margin-bottom:22px; }
+.notice svg{ width:16px; height:16px; flex-shrink:0; }
+.notice b{ font-weight:700; }
+.notice .btn{ margin-left:auto; }
+.notice-danger{ background:#FBE7E1; border-color:#E3B7A8; color:#7A2E1B; }
+.notice-info{ background:#EAF1FB; border-color:#C7D8F0; color:#1D3E6E; }
+.notice-ok{ background:#E9F5EF; border-color:#BFE0D0; color:#155C3F; }
+.notice-stack{ display:flex; flex-direction:column; gap:10px; }
+.notice-stack .notice{ margin-bottom:0; }
+.stat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:26px; }
+.stat-card{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:16px; text-align:left; cursor:pointer; color:var(--navy); }
+.stat-card:hover{ border-color:var(--navy); }
+.stat-card svg{ width:18px; height:18px; }
+.stat-value{ font-family:'Fraunces',serif; font-size:26px; font-weight:600; margin:10px 0 2px; }
+.stat-label{ font-size:12px; color:var(--muted); }
+.module-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+.module-card{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:20px; text-align:left; cursor:pointer; display:flex; flex-direction:column; gap:8px; }
+.module-card:hover{ border-color:var(--navy); box-shadow:0 6px 18px rgba(20,28,54,0.07); }
+.module-icon{ width:36px; height:36px; border-radius:9px; background:var(--gold-soft); color:var(--gold); display:flex; align-items:center; justify-content:center; }
+.module-icon svg{ width:19px; height:19px; }
+.module-title{ font-weight:700; font-size:15px; color:var(--navy); }
+.module-desc{ font-size:12.5px; color:var(--muted); line-height:1.5; flex:1; }
+.module-go{ font-size:12.5px; font-weight:700; color:var(--gold); display:flex; align-items:center; gap:2px; }
+.module-go svg{ width:14px; height:14px; }
+
+/* ---------- Panel / forms ---------- */
+.panel{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-bottom:24px; }
+.panel-title{ font-weight:700; font-size:13.5px; color:var(--navy); margin-bottom:12px; }
+.panel-title.spaced{ margin-top:22px; padding-top:18px; border-top:1px solid var(--line); }
+.form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-grid.cols-4{ grid-template-columns:repeat(4,1fr); }
+.field{ display:flex; flex-direction:column; gap:5px; }
+.field-full{ grid-column:1/-1; }
+.field-label{ font-size:12px; font-weight:600; color:var(--navy); }
+.field-hint{ font-size:11px; color:var(--muted); }
+.ti,.ta,.se{ border:1px solid var(--line); border-radius:8px; padding:9px 10px; font-size:13.5px; color:var(--ink); background:#fff; width:100%; }
+.ti:focus,.ta:focus,.se:focus{ outline:2px solid var(--navy-2); outline-offset:1px; border-color:var(--navy-2); }
+.ta{ resize:vertical; min-height:38px; line-height:1.4; }
+.tiny-hint{ font-size:11.5px; color:var(--muted); margin-top:10px; }
+
+.segmented{ display:flex; background:#fff; border:1px solid var(--line); border-radius:9px; overflow:hidden; }
+.segmented button{ border:none; background:transparent; padding:8px 14px; font-size:12.5px; font-weight:600; color:var(--muted); cursor:pointer; }
+.segmented button.active{ background:var(--navy); color:#fff; }
+
+/* ---------- Edit tables ---------- */
+.table-wrap{ overflow-x:auto; margin-bottom:6px; }
+.edit-table{ border-collapse:collapse; width:100%; min-width:640px; }
+.edit-table th{ text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); padding:6px 6px; border-bottom:2px solid var(--line); }
+.edit-table td{ padding:5px 6px; vertical-align:top; }
+.edit-table .num{ text-align:center; }
+.edit-table th.warn{ color:var(--danger); }
+.edit-table td.warn-cell{ background:#FBE7E1; border-radius:6px; }
+.cell-small{ width:56px; text-align:center; padding:6px 4px; }
+.efektif-row td{ background:#F8F9FC; color:var(--navy-2); font-weight:700; font-size:11.5px; padding:6px; border-bottom:2px solid var(--line); }
+.efektif-row td.num{ text-align:center; }
+.efektif-row .efektif-label{ text-transform:uppercase; letter-spacing:.03em; font-size:10.5px; color:var(--muted); font-weight:700; }
+.nilai-cell{ font-weight:700; color:var(--navy); text-align:center; }
+.kal-summary{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:14px 0 18px; }
+.kal-summary-card{ background:#F8F9FC; border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+.kal-summary-value{ font-family:'Fraunces',serif; font-size:20px; font-weight:600; color:var(--navy); }
+.kal-summary-label{ font-size:11.5px; color:var(--muted); margin-top:2px; }
+
+.kal-month-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:8px; }
+.kal-month-card{ background:#F8F9FC; border:1px solid var(--line); border-radius:10px; padding:14px; }
+.kal-month-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; flex-wrap:wrap; }
+.kal-month-name{ font-weight:700; font-size:13.5px; color:var(--navy); }
+.kal-month-badges{ display:flex; gap:6px; }
+.kal-badge{ font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:20px; }
+.kal-badge-ok{ background:#E9F5EF; color:#155C3F; }
+.kal-badge-off{ background:#FBE7E1; color:#7A2E1B; }
+.kal-cal{ border-collapse:collapse; width:100%; table-layout:fixed; }
+.kal-cal th{ font-size:9.5px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; color:var(--muted); text-align:center; padding:0 0 4px; }
+.kal-cal td{ text-align:center; padding:2px 0; }
+.kal-cal tr.kal-week-off td{ background:rgba(179,67,45,0.06); }
+.kal-cal tr.kal-week-off td:first-child{ border-radius:6px 0 0 6px; }
+.kal-cal tr.kal-week-off td:last-child{ border-radius:0 6px 6px 0; }
+.kal-day{ display:flex; align-items:center; justify-content:center; width:26px; height:26px; margin:0 auto; border-radius:7px; font-size:11px; font-weight:600; cursor:pointer; color:var(--ink); background:#fff; border:1px solid var(--line); padding:0; }
+.kal-day:hover{ border-color:var(--navy-2); }
+.kal-day.spill{ color:var(--muted); background:transparent; border-color:transparent; font-weight:500; }
+.kal-day.libur{ background:var(--danger); border-color:var(--danger); color:#fff; }
+.kal-month-ket{ margin-top:10px; }
+
+.kegiatan-list, .kriteria-list{ display:flex; flex-direction:column; gap:10px; }
+.kegiatan-row{ display:grid; grid-template-columns:130px 1fr 90px 36px; gap:8px; align-items:start; }
+.kriteria-row{ display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr 36px; gap:8px; align-items:start; background:#FAFBFD; border:1px solid var(--line); border-radius:9px; padding:10px; }
+.waktu-input{ text-align:center; }
+
+.list-layout{ display:grid; grid-template-columns:220px 1fr; gap:20px; align-items:start; }
+.side-list{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:10px; position:sticky; top:20px; }
+.side-list-head{ display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700; text-transform:uppercase; color:var(--muted); padding:6px 6px 10px; }
+.side-list-head svg{ width:14px; height:14px; }
+.list-item{ display:flex; align-items:center; gap:7px; padding:8px 8px; border-radius:8px; cursor:pointer; font-size:12.5px; color:var(--ink); }
+.list-item svg{ width:14px; height:14px; flex-shrink:0; }
+.list-item:hover{ background:#F1F3F8; }
+.list-item.active{ background:var(--gold-soft); color:#6B4E17; font-weight:700; }
+.list-item-title{ flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.list-item-actions{ display:flex; gap:3px; }
+
+/* ---------- Paper (dokumen cetak) ---------- */
+.paper{ background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:46px 50px; box-shadow:0 10px 30px rgba(20,28,54,0.06); color:#111; }
+.kop-top{ display:flex; align-items:center; gap:16px; }
+.kop-badge{ font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:.06em; color:var(--gold); border:1.5px solid var(--gold); border-radius:8px; padding:8px 10px; text-align:center; line-height:1.5; flex-shrink:0; }
+.kop-badge span{ display:block; color:var(--navy); }
+.kop-logo{ width:52px; height:52px; object-fit:contain; flex-shrink:0; border-radius:6px; }
+.kop-sekolah{ font-family:'Fraunces',serif; font-weight:700; font-size:19px; color:var(--navy); }
+.kop-alamat{ font-size:11.5px; color:var(--muted); margin-top:2px; }
+.kop-rule{ margin:14px 0 18px; }
+.kop-rule .thick{ height:3px; background:var(--navy); }
+.kop-rule .thin{ height:1px; background:var(--navy); margin-top:3px; }
+
+.logo-upload{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.logo-preview{ width:76px; height:76px; border:1px dashed var(--line); border-radius:10px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#F8F9FC; flex-shrink:0; }
+.logo-preview img{ width:100%; height:100%; object-fit:contain; }
+.logo-preview .kop-badge{ margin:0; }
+.logo-upload-actions{ display:flex; flex-direction:column; gap:8px; }
+.logo-upload-actions input[type=file]{ display:none; }
+.doc-title{ text-align:center; margin-bottom:22px; }
+.doc-title h1{ font-family:'Fraunces',serif; font-size:18px; letter-spacing:.03em; margin:0 0 4px; color:var(--navy); }
+.doc-title p{ font-size:12.5px; color:var(--muted); margin:0; }
+
+.sect{ font-family:'Fraunces',serif; font-size:14.5px; color:var(--navy); border-bottom:1px solid var(--line); padding-bottom:6px; margin:22px 0 10px; }
+.paper p{ font-size:12.5px; line-height:1.6; margin:0 0 8px; }
+.paper p.pre{ white-space:pre-wrap; background:#F8F9FC; border-radius:7px; padding:9px 11px; }
+
+.info-table{ width:100%; border-collapse:collapse; font-size:12.5px; margin-bottom:10px; }
+.info-table td{ border:1px solid var(--line); padding:6px 9px; }
+.info-table td:nth-child(odd){ width:150px; font-weight:600; background:#F8F9FC; color:var(--navy); }
+
+.print-table{ width:100%; border-collapse:collapse; font-size:12px; margin-bottom:8px; }
+.print-table.small{ font-size:11px; }
+.print-table th{ background:var(--navy); color:#fff; font-size:10.5px; text-transform:uppercase; letter-spacing:.02em; padding:7px 8px; text-align:left; }
+.print-table td{ border:1px solid var(--line); padding:6px 8px; vertical-align:top; }
+.print-table .num{ text-align:center; }
+.print-table tfoot td{ border-top:2px solid var(--navy); font-weight:700; background:#F8F9FC; }
+.print-table tr.efektif-row td{ background:#F0F3F9; font-weight:700; font-style:italic; color:var(--navy-2); }
+.tf-label{ text-align:right; }
+.tf-value{ color:var(--navy); }
+
+.sign-block{ display:flex; justify-content:space-between; margin-top:40px; gap:20px; }
+.sign-col{ font-size:12.5px; text-align:center; width:230px; }
+.sign-space{ height:56px; }
+.sign-name{ font-weight:700; text-decoration:underline; margin:0; }
+.sign-nip{ margin:2px 0 0; color:var(--muted); }
+.qr-wrap{ display:flex; flex-direction:column; align-items:center; gap:3px; margin:8px 0; }
+.qr-img{ width:76px; height:76px; display:block; }
+.qr-code-txt{ font-family:'JetBrains Mono',monospace; font-size:8.5px; color:var(--muted); letter-spacing:.02em; }
+.qr-empty{ display:flex; align-items:center; justify-content:center; height:56px; border:1px dashed var(--line); border-radius:8px; font-size:10px; color:var(--muted); text-align:center; padding:0 8px; }
+.ttd-actions{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:6px; }
+.ttd-status{ font-size:12px; color:var(--muted); }
+.ttd-status b{ color:var(--green); }
+
+/* ---------- Toast ---------- */
+.toast{ position:fixed; bottom:22px; right:22px; background:var(--navy); color:#fff; padding:9px 16px; border-radius:9px; font-size:12.5px; display:flex; align-items:center; gap:7px; box-shadow:0 8px 22px rgba(0,0,0,0.2); z-index:40; opacity:0; transform:translateY(6px); transition:opacity .2s, transform .2s; pointer-events:none; }
+.toast svg{ width:14px; height:14px; }
+.toast.show{ opacity:1; transform:translateY(0); }
+
+/* ---------- Responsive ---------- */
+@media (max-width:980px){
+  .form-grid, .form-grid.cols-4{ grid-template-columns:1fr; }
+  .stat-grid{ grid-template-columns:repeat(2,1fr); }
+  .module-grid{ grid-template-columns:1fr; }
+  .list-layout{ grid-template-columns:1fr; }
+}
+@media (max-width:760px){
+  .sidebar{ position:fixed; left:-260px; z-index:30; transition:left .2s; top:0; }
+  .sidebar.open{ left:0; }
+  .mobile-nav-btn{ display:flex; position:fixed; top:16px; left:16px; z-index:15; background:var(--navy); color:#fff; border:none; border-radius:9px; padding:9px; }
+  .mobile-nav-btn svg{ width:18px; height:18px; }
+  .main{ padding:70px 16px 60px; }
+  .paper{ padding:26px 20px; }
+  .kegiatan-row, .kriteria-row{ grid-template-columns:1fr; }
+}
+
+/* ---------- Print ---------- */
+.kalender-semester-page + .kalender-semester-page{ margin-top:36px; padding-top:32px; border-top:2px dashed var(--line); }
+@media print{
+  @page{ size:A4; margin:14mm; }
+  body *{ visibility:hidden; }
+  .print-area, .print-area *{ visibility:visible; }
+  .print-area{ position:absolute; top:0; left:0; width:100%; box-shadow:none; border:none; padding:0; }
+  .no-print{ display:none !important; }
+  body{ background:#fff; }
+  .kalender-semester-page + .kalender-semester-page{ margin-top:0; padding-top:0; border-top:none; page-break-before:always; break-before:page; }
+}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+
+<script>
+/* ============================== KONSTANTA ============================== */
+
+const STORAGE_KEY = 'km-app-data-sma-v1';
+
+const BULAN_GANJIL = ['Juli','Agustus','September','Oktober','November','Desember'];
+const BULAN_GENAP  = ['Januari','Februari','Maret','April','Mei','Juni'];
+const MONTH_NAMES = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const MONTH_IDX = { Januari:0, Februari:1, Maret:2, April:3, Mei:4, Juni:5, Juli:6, Agustus:7, September:8, Oktober:9, November:10, Desember:11 };
+const HARI_SINGKAT = ['Sen','Sel','Rab','Kam','Jum','Sab'];
+const FASE_OPTIONS = ['A','B','C','D','E','F'];
+const LEVEL_KOGNITIF = ['C1 - Mengingat','C2 - Memahami','C3 - Menerapkan','C4 - Menganalisis','C5 - Mengevaluasi','C6 - Mencipta'];
+const BENTUK_SOAL = ['Pilihan Ganda','Uraian','Isian Singkat','Menjodohkan','Benar - Salah'];
+const JENIS_PENILAIAN_UJIAN = ['Sumatif Akhir Semester','Sumatif Tengah Semester','Sumatif Lingkup Materi','Asesmen Formatif'];
+const JENIS_RUBRIK = ['Kinerja','Proyek','Produk','Portofolio','Presentasi','Praktik'];
+
+const uid = () => Math.random().toString(36).slice(2, 10);
+
+function todayID(){
+  const d = new Date();
+  const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  return d.getDate() + ' ' + bulan[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+function esc(s){
+  return (s === null || s === undefined ? '' : String(s))
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function nl2br(s){ return esc(s).replace(/\n/g,'<br/>'); }
+
+/* ============================== ICONS ============================== */
+
+const ICON = {
+  menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>',
+  dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  school: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 12 4l9 6"/><path d="M5 10v9h14v-9"/><path d="M10 19v-5h4v5"/></svg>',
+  calRange: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><path d="M8 15h8"/></svg>',
+  calDays: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><circle cx="8" cy="15" r="1"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c2-1 5-1 8 0v14c-3-1-6-1-8 0z"/><path d="M20 5c-2-1-5-1-8 0v14c3-1 6-1 8 0z"/></svg>',
+  clipboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2.5" width="6" height="3" rx="1"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="16" y2="15"/></svg>',
+  helpList: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3 2.4c-.9.3-1.5.9-1.5 1.9"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor" stroke="none"/></svg>',
+  rubric: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/><line x1="15" y1="4" x2="15" y2="20"/></svg>',
+  printer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="1.5"/><path d="M6 17h12v5H6z"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg>',
+  chev: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg>',
+  pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 10-10-3-3L5 16z"/></svg>',
+  alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="16.3" r="0.6" fill="currentColor" stroke="none"/></svg>',
+  gradcap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>',
+  calEdu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><polyline points="8.5 15 10.5 17 15.5 13"/></svg>',
+  upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><polyline points="7 9 12 4 17 9"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>'
+};
+
+/* ============================== DEFAULT DATA (SMA) ============================== */
+
+function defaultIdentitas(){
+  return {
+    namaSekolah:'', npsn:'', alamat:'', kota:'',
+    kepsek:'', nipKepsek:'', guru:'', nipGuru:'',
+    tapel:'2026/2027', fase:'E', kelas:'X', mapel:'',
+    tanggal: todayID(), logo:'',
+    waktuTtdGuru:'', tglTtdGuru:'', waktuTtdKepsek:'', tglTtdKepsek:'',
+  };
+}
+const emptyProtaRow  = () => ({ id: uid(), elemen:'', capaian:'', alokasi:'', semester:'Ganjil', keterangan:'' });
+const emptyPromesRow = () => ({ id: uid(), tujuan:'', alokasi:'', bulan:{} });
+const emptyKktpRow   = () => ({ id: uid(), capaian:'', tujuan:'', kompleksitas:70, dayaDukung:70, intake:70 });
+const emptyKegiatan  = () => ({ id: uid(), tahap:'Pendahuluan', deskripsi:'', waktu:'' });
+const emptyKisiRow   = () => ({ id: uid(), materi:'', tujuan:'', indikator:'', level:'C2 - Memahami', bentuk:'Pilihan Ganda', jml:'1', nomor:'' });
+const emptyKriteria  = () => ({ id: uid(), aspek:'', s4:'', s3:'', s2:'', s1:'' });
+
+function emptyModul(){
+  return {
+    id: uid(), judul:'Modul Ajar Baru',
+    penyusun:'', institusi:'', tahun:String(new Date().getFullYear()),
+    jenjang:'SMA', fase:'E', kelas:'X', alokasiWaktu:'2 x 45 menit',
+    elemen:'', kompetensiAwal:'', profilPelajar:'', saranaPrasarana:'',
+    targetPesertaDidik:'Reguler', modelPembelajaran:'Tatap Muka',
+    tujuanPembelajaran:'', pemahamanBermakna:'', pertanyaanPemantik:'',
+    kegiatan:[
+      { id: uid(), tahap:'Pendahuluan', deskripsi:'', waktu:'10 menit' },
+      { id: uid(), tahap:'Inti', deskripsi:'', waktu:'70 menit' },
+      { id: uid(), tahap:'Penutup', deskripsi:'', waktu:'10 menit' },
+    ],
+    asesmenDiagnostik:'', asesmenFormatif:'', asesmenSumatif:'',
+    pengayaan:'', remedial:'',
+    bahanBacaan:'', glosarium:'', daftarPustaka:'',
+  };
+}
+
+function emptyKisiHeader(){
+  return { jenisPenilaian:'Sumatif Akhir Semester', bentukUjian:'Tertulis', waktuUjian:'90 menit', jumlahSoal:'20' };
+}
+
+function emptyRubrik(){
+  return {
+    id: uid(), judul:'Rubrik Penilaian Baru', jenisPenilaian:'Kinerja', tugas:'',
+    petunjuk:'Nilai Akhir = (Skor Perolehan / Skor Maksimal) x 100',
+    kriteria:[ emptyKriteria(), emptyKriteria() ],
+  };
+}
+
+function emptyKalenderBulan(){ return { ket:'' }; }
+function defaultKalender(){
+  const mk = (list) => { const o = {}; list.forEach(b => { o[b] = emptyKalenderBulan(); }); return o; };
+  return {
+    jpPerMinggu: 4,
+    Ganjil: mk(BULAN_GANJIL),
+    Genap: mk(BULAN_GENAP),
+    libur: {}, // { 'YYYY-MM-DD': true } — tanggal yang ditandai guru sebagai hari libur
+  };
+}
+
+function defaultData(){
+  return {
+    identitas: defaultIdentitas(),
+    kalender: defaultKalender(),
+    prota: [emptyProtaRow()],
+    promes: { Ganjil: [emptyPromesRow()], Genap: [emptyPromesRow()] },
+    kktp: [emptyKktpRow()],
+    modulList: [emptyModul()],
+    kisiHeader: emptyKisiHeader(),
+    kisi: [emptyKisiRow()],
+    rubrikList: [emptyRubrik()],
+  };
+}
+
+/* ============================== STATE ============================== */
+
+let STATE = defaultData();
+let ACTIVE = 'dashboard';
+let ACTIVE_MODUL_ID = null;
+let ACTIVE_RUBRIK_ID = null;
+let SEMESTER = 'Ganjil';
+let KAL_SEMESTER = 'Ganjil';
+let saveTimer = null;
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw){
+      const parsed = JSON.parse(raw);
+      STATE = Object.assign(defaultData(), parsed);
+      STATE.identitas = Object.assign(defaultIdentitas(), STATE.identitas || {});
+      STATE.kalender = Object.assign(defaultKalender(), STATE.kalender || {});
+      if (Array.isArray(STATE.promes)){
+        // Migrasi data lama: satu daftar Promes dipisah menjadi Ganjil & Genap.
+        // Baris dengan isi JP di bulan-bulan Ganjil masuk daftar Ganjil, begitu pula Genap.
+        // Baris yang berisi keduanya akan disalin ke kedua daftar; baris kosong masuk ke Ganjil.
+        const legacy = STATE.promes;
+        const ganjil = [], genap = [];
+        legacy.forEach(r => {
+          const bulan = r.bulan || {};
+          const isiGanjil = BULAN_GANJIL.some(b => (parseInt(bulan[b])||0) > 0);
+          const isiGenap = BULAN_GENAP.some(b => (parseInt(bulan[b])||0) > 0);
+          const bGanjil = {}; BULAN_GANJIL.forEach(b => { if (bulan[b]!==undefined) bGanjil[b]=bulan[b]; });
+          const bGenap = {}; BULAN_GENAP.forEach(b => { if (bulan[b]!==undefined) bGenap[b]=bulan[b]; });
+          if (isiGenap && !isiGanjil){
+            genap.push(Object.assign({}, r, { bulan: bGenap }));
+          } else if (isiGanjil && isiGenap){
+            ganjil.push(Object.assign({}, r, { id: uid(), bulan: bGanjil }));
+            genap.push(Object.assign({}, r, { id: uid(), bulan: bGenap }));
+          } else {
+            ganjil.push(Object.assign({}, r, { bulan: bGanjil }));
+          }
+        });
+        STATE.promes = {
+          Ganjil: ganjil.length ? ganjil : [emptyPromesRow()],
+          Genap: genap.length ? genap : [emptyPromesRow()],
+        };
+      }
+      STATE.promes = Object.assign({ Ganjil:[emptyPromesRow()], Genap:[emptyPromesRow()] }, STATE.promes || {});
+      if (!Array.isArray(STATE.promes.Ganjil) || STATE.promes.Ganjil.length === 0) STATE.promes.Ganjil = [emptyPromesRow()];
+      if (!Array.isArray(STATE.promes.Genap) || STATE.promes.Genap.length === 0) STATE.promes.Genap = [emptyPromesRow()];
+      if (!STATE.kalender.libur || typeof STATE.kalender.libur !== 'object') STATE.kalender.libur = {};
+      ['Ganjil','Genap'].forEach(sem => {
+        const list = sem === 'Ganjil' ? BULAN_GANJIL : BULAN_GENAP;
+        STATE.kalender[sem] = STATE.kalender[sem] || {};
+        list.forEach(b => { STATE.kalender[sem][b] = Object.assign(emptyKalenderBulan(), STATE.kalender[sem][b] || {}); });
+      });
+    }
+  }catch(e){ console.warn('Gagal memuat data tersimpan, memakai data default.', e); }
+}
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+      showToast('Tersimpan');
+    }catch(e){ console.warn('Penyimpanan lokal tidak tersedia.', e); }
+  }, 350);
+}
+function showToast(msg){
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.innerHTML = ICON.check + ' <span>' + esc(msg) + '</span>';
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), 1100);
+}
+
+function kategoriKktp(v){
+  if (v >= 90) return 'Sangat Tinggi';
+  if (v >= 80) return 'Tinggi';
+  if (v >= 70) return 'Sedang';
+  return 'Perlu Perhatian';
+}
+
+/* ============================== NAV ============================== */
+
+const NAV = [
+  { key:'dashboard', label:'Beranda', icon:'dashboard' },
+  { key:'identitas', label:'Identitas Satuan Pendidikan', icon:'school' },
+  { key:'kalender', label:'Kalender Pendidikan', icon:'calEdu' },
+  { key:'prota', label:'Program Tahunan', icon:'calRange' },
+  { key:'promes', label:'Program Semester', icon:'calDays' },
+  { key:'modul', label:'Modul Ajar', icon:'book' },
+  { key:'kktp', label:'Analisis KKTP / KKM', icon:'clipboard' },
+  { key:'kisi', label:'Kisi-Kisi Soal', icon:'helpList' },
+  { key:'rubrik', label:'Rubrik Penilaian', icon:'rubric' },
+];
+
+function setActive(key){
+  ACTIVE = key;
+  document.getElementById('nav-mobile-scrim') && closeMobileNav();
+  renderShell();
+}
+function openMobileNav(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('nav-mobile-scrim').style.display = 'block'; }
+function closeMobileNav(){ const sb = document.getElementById('sidebar'); if (sb) sb.classList.remove('open'); const sc = document.getElementById('nav-mobile-scrim'); if (sc) sc.style.display = 'none'; }
+
+/* ============================== FIELD HELPERS ============================== */
+
+function field(label, innerHtml, full, hint){
+  return '<label class="field ' + (full ? 'field-full' : '') + '">' +
+    '<span class="field-label">' + esc(label) + '</span>' + innerHtml +
+    (hint ? '<span class="field-hint">' + esc(hint) + '</span>' : '') + '</label>';
+}
+function selectHtml(options, value, onchange, cls){
+  return '<select class="se ' + (cls||'') + '" onchange="' + onchange + '">' +
+    options.map(o => '<option value="' + esc(o) + '" ' + (o === value ? 'selected' : '') + '>' + esc(o) + '</option>').join('') +
+    '</select>';
+}
+
+/* ============================== KOP / TANDA TANGAN (PAPER) ============================== */
+
+function kopHtml(title, sub){
+  const id = STATE.identitas;
+  return '' +
+  '<div class="kop">' +
+    '<div class="kop-top">' +
+      (id.logo ? '<img class="kop-logo" src="' + id.logo + '" alt="Logo Sekolah" />' : '<div class="kop-badge">MERDEKA<span>BELAJAR</span></div>') +
+      '<div class="kop-text">' +
+        '<div class="kop-sekolah">' + esc(id.namaSekolah || 'Nama Satuan Pendidikan') + '</div>' +
+        '<div class="kop-alamat">' + esc(id.alamat || 'Alamat Sekolah') + (id.kota ? ' — ' + esc(id.kota) : '') + (id.npsn ? ' · NPSN ' + esc(id.npsn) : '') + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="kop-rule"><div class="thick"></div><div class="thin"></div></div>' +
+    '<div class="doc-title"><h1>' + esc(title) + '</h1>' + (sub ? '<p>' + esc(sub) + '</p>' : '') + '</div>' +
+  '</div>';
+}
+/* ---- Tanda Tangan Elektronik (QR) ---- */
+function fnv1a(str){
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++){
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0).toString(16).toUpperCase().padStart(8, '0');
+}
+function ttdWaktu(role){ return role === 'guru' ? STATE.identitas.waktuTtdGuru : STATE.identitas.waktuTtdKepsek; }
+function ttdTanggal(role){ return (role === 'guru' ? STATE.identitas.tglTtdGuru : STATE.identitas.tglTtdKepsek) || STATE.identitas.tanggal; }
+function ttdHash(role, docTitle){
+  const id = STATE.identitas;
+  const nama = role === 'guru' ? id.guru : id.kepsek;
+  const raw = [nama, id.mapel, id.namaSekolah, ttdTanggal(role), ttdWaktu(role), docTitle, 'SKM-2026'].join('|');
+  return fnv1a(raw);
+}
+function ttdQrText(role, docTitle){
+  const id = STATE.identitas;
+  const nama = role === 'guru' ? id.guru : id.kepsek;
+  const jabatan = role === 'guru' ? 'Guru Mata Pelajaran' : 'Kepala Sekolah';
+  return [
+    'TANDA TANGAN ELEKTRONIK (INTERNAL SEKOLAH)',
+    'Dokumen  : ' + docTitle,
+    'Nama     : ' + (nama || '-'),
+    'Jabatan  : ' + jabatan,
+    'Mapel    : ' + (id.mapel || '-'),
+    'Sekolah  : ' + (id.namaSekolah || '-'),
+    'Tanggal  : ' + (ttdTanggal(role) || '-'),
+    'Waktu    : ' + (ttdWaktu(role) || '-') + ' WIB',
+    'Kode Verifikasi : ' + ttdHash(role, docTitle),
+    '',
+    'Kode verifikasi adalah checksum internal aplikasi untuk mendeteksi perubahan data pada tanda tangan ini. Bukan sertifikat elektronik tersertifikasi (bukan BSrE/PSrE).'
+  ].join('\n');
+}
+function signQrHtml(role, docTitle){
+  const waktu = ttdWaktu(role);
+  if (!waktu){
+    return '<div class="qr-empty"></div>';
+  }
+  const url = 'https://api.qrserver.com/v1/create-qr-code/?size=130x130&ecc=M&margin=6&data=' + encodeURIComponent(ttdQrText(role, docTitle));
+  return '<div class="qr-wrap">' +
+    '<img class="qr-img" src="' + url + '" alt="QR Tanda Tangan Elektronik" />' +
+  '</div>';
+}
+function signBlockHtml(docTitle){
+  const id = STATE.identitas;
+  const title = docTitle || 'DOKUMEN';
+  return '' +
+  '<div class="sign-block">' +
+    '<div class="sign-col"><p>Mengetahui,<br/>Kepala Sekolah</p>' +
+      signQrHtml('kepsek', title) +
+      '<p class="sign-name">' + esc(id.kepsek || '.....................................') + '</p></div>' +
+    '<div class="sign-col"><p>' + esc((id.kota || 'Kota') + ', ' + (ttdTanggal('guru') || id.tanggal)) + '<br/>Guru Mata Pelajaran</p>' +
+      signQrHtml('guru', title) +
+      '<p class="sign-name">' + esc(id.guru || '.....................................') + '</p></div>' +
+  '</div>';
+}
+
+/* ============================== SHELL RENDER ============================== */
+
+function renderShell(){
+  const app = document.getElementById('app');
+  app.innerHTML = '' +
+    '<button class="mobile-nav-btn no-print" onclick="openMobileNav()">' + ICON.menu + '</button>' +
+    sidebarHtml() +
+    '<div id="nav-mobile-scrim" class="scrim no-print" style="display:none" onclick="closeMobileNav()"></div>' +
+    '<main class="main"><div id="main-view"></div></main>' +
+    '<div id="toast" class="toast"></div>';
+  renderView();
+}
+
+function sidebarHtml(){
+  return '<aside class="sidebar no-print" id="sidebar">' +
+    '<div class="brand"><div class="brand-mark">' + ICON.gradcap + '</div>' +
+      '<div><div class="brand-title">Perangkat Ajar</div><div class="brand-sub">Kurikulum Merdeka · SMA</div></div></div>' +
+    '<nav>' + NAV.map(n =>
+      '<button class="nav-item ' + (ACTIVE === n.key ? 'active' : '') + '" onclick="setActive(\'' + n.key + '\')">' +
+        ICON[n.icon] + '<span>' + esc(n.label) + '</span>' + ICON.chev.replace('<svg ', '<svg class="chev" ') +
+      '</button>'
+    ).join('') + '</nav>' +
+    '<div class="sidebar-foot">Data tersimpan otomatis di browser ini (localStorage).</div>' +
+  '</aside>';
+}
+
+function renderView(){
+  const el = document.getElementById('main-view');
+  if (!el) return;
+  const map = {
+    dashboard: viewDashboard, identitas: viewIdentitas, kalender: viewKalender, prota: viewProta, promes: viewPromes,
+    modul: viewModul, kktp: viewKktp, kisi: viewKisi, rubrik: viewRubrik,
+  };
+  el.innerHTML = (map[ACTIVE] || viewDashboard)();
+}
+
+/* ============================== VIEW HEAD ============================== */
+
+function viewHead(eyebrow, title, lead, extraHtml){
+  return '<div class="view-head">' +
+    '<div><div class="eyebrow">' + esc(eyebrow) + '</div><h2>' + esc(title) + '</h2><p class="lead">' + esc(lead) + '</p></div>' +
+    '<div class="view-head-actions no-print">' + (extraHtml || '') +
+      '<button class="btn btn-primary" onclick="window.print()">' + ICON.printer + ' Cetak / Simpan PDF</button>' +
+    '</div></div>';
+}
+
+/* ============================== DASHBOARD ============================== */
+
+function viewDashboard(){
+  const d = STATE;
+  const stats = [
+    { key:'kalender', label:'Minggu Efektif Tercatat', value:kalenderTotalEfektif('Ganjil')+kalenderTotalEfektif('Genap'), icon:'calEdu' },
+    { key:'prota', label:'Baris Program Tahunan', value:d.prota.length, icon:'calRange' },
+    { key:'promes', label:'Baris Program Semester', value:d.promes.Ganjil.length + d.promes.Genap.length, icon:'calDays' },
+    { key:'modul', label:'Modul Ajar Tersusun', value:d.modulList.length, icon:'book' },
+    { key:'kktp', label:'Tujuan Dianalisis KKTP', value:d.kktp.length, icon:'clipboard' },
+    { key:'kisi', label:'Butir Kisi-Kisi Soal', value:d.kisi.length, icon:'helpList' },
+    { key:'rubrik', label:'Rubrik Penilaian', value:d.rubrikList.length, icon:'rubric' },
+  ];
+  const notice = !d.identitas.namaSekolah ? (
+    '<div class="notice">' + ICON.alert +
+    '<span>Lengkapi <b>Identitas Satuan Pendidikan</b> terlebih dahulu agar kop surat pada setiap dokumen terisi otomatis.</span>' +
+    '<button class="btn btn-ghost" onclick="setActive(\'identitas\')">Isi sekarang</button></div>'
+  ) : '';
+
+  const modules = NAV.filter(n => n.key !== 'dashboard' && n.key !== 'identitas');
+  const desc = {
+    kalender:'Tetapkan minggu efektif, minggu tidak efektif, dan JP per minggu sebagai dasar perhitungan otomatis Prota & Promes.',
+    prota:'Petakan elemen/capaian pembelajaran dan alokasi jam per semester untuk satu tahun ajaran.',
+    promes:'Distribusikan tujuan pembelajaran ke dalam minggu efektif setiap bulan pada satu semester.',
+    modul:'Susun modul ajar lengkap: identitas, tujuan, kegiatan, hingga asesmen — bisa lebih dari satu.',
+    kktp:'Hitung Kriteria Ketercapaian Tujuan Pembelajaran (dahulu KKM) per tujuan pembelajaran.',
+    kisi:'Susun kisi-kisi soal ujian: materi, indikator, level kognitif, bentuk, dan sebaran nomor soal.',
+    rubrik:'Buat rubrik penilaian kinerja/proyek/produk dengan deskriptor tiap level skor 4–1.',
+  };
+
+  return '<div class="view">' +
+    '<div class="view-head"><div><div class="eyebrow">Ringkasan</div><h2>Selamat menyusun perangkat pembelajaran</h2>' +
+    '<p class="lead">Satu tempat untuk merancang Program Tahunan, Program Semester, Modul Ajar, Analisis KKTP/KKM, Kisi-Kisi Soal, dan Rubrik Penilaian — lengkap dengan tampilan siap cetak, khusus jenjang SMA.</p></div></div>' +
+    notice +
+    '<div class="stat-grid">' + stats.map(s =>
+      '<button class="stat-card" onclick="setActive(\'' + s.key + '\')">' + ICON[s.icon] +
+      '<div class="stat-value">' + s.value + '</div><div class="stat-label">' + esc(s.label) + '</div></button>'
+    ).join('') + '</div>' +
+    '<div class="module-grid">' + modules.map(n =>
+      '<button class="module-card" onclick="setActive(\'' + n.key + '\')">' +
+        '<div class="module-icon">' + ICON[n.icon] + '</div>' +
+        '<div class="module-title">' + esc(n.label) + '</div>' +
+        '<div class="module-desc">' + esc(desc[n.key]) + '</div>' +
+        '<div class="module-go">Buka ' + ICON.chev + '</div>' +
+      '</button>'
+    ).join('') + '</div>' +
+  '</div>';
+}
+
+/* ============================== IDENTITAS ============================== */
+
+function viewIdentitas(){
+  const id = STATE.identitas;
+  const row = (label, key, placeholder) =>
+    field(label, '<input class="ti" value="' + esc(id[key]) + '" placeholder="' + esc(placeholder||'') + '" oninput="onIdentitasChange(\'' + key + '\', this.value)" />');
+
+  return '<div class="view">' +
+    '<div class="view-head"><div><div class="eyebrow">Pengaturan</div><h2>Identitas Satuan Pendidikan</h2>' +
+    '<p class="lead">Informasi ini otomatis mengisi kop surat pada seluruh dokumen yang dicetak.</p></div></div>' +
+    '<div class="panel">' +
+      '<div class="panel-title">Logo Sekolah</div>' +
+      '<div class="logo-upload">' +
+        '<div class="logo-preview" id="logo-preview">' +
+          (id.logo ? '<img src="' + id.logo + '" alt="Logo Sekolah" />' : '<div class="kop-badge">MERDEKA<span>BELAJAR</span></div>') +
+        '</div>' +
+        '<div class="logo-upload-actions">' +
+          '<label class="btn btn-outline" style="margin-top:0">' + ICON.upload + ' Unggah Logo<input type="file" accept="image/*" onchange="onLogoUpload(this)" /></label>' +
+          (id.logo ? '<button class="btn btn-ghost" style="border-color:var(--danger);color:var(--danger)" onclick="onLogoRemove()">' + ICON.trash + ' Hapus Logo &amp; Pakai Lencana Default</button>' : '') +
+          '<span class="field-hint">Format PNG/JPG, akan otomatis disesuaikan ukurannya dan menggantikan lencana "Merdeka Belajar" pada kop surat.</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="panel-title spaced">Informasi Umum</div>' +
+      '<div class="form-grid">' +
+      row('Nama Sekolah','namaSekolah','SMA Negeri 1 Kupang') +
+      row('NPSN','npsn','12345678') +
+      field('Alamat', '<input class="ti" value="' + esc(id.alamat) + '" placeholder="Jl. Pendidikan No. 1" oninput="onIdentitasChange(\'alamat\', this.value)" />', true) +
+      row('Kota/Kabupaten','kota','Kupang') +
+      row('Tahun Ajaran','tapel','2026/2027') +
+      field('Fase', selectHtml(FASE_OPTIONS, id.fase, "onIdentitasChange('fase', this.value)")) +
+      row('Kelas','kelas','X') +
+      row('Mata Pelajaran','mapel','Matematika Wajib') +
+      row('Nama Kepala Sekolah','kepsek','') +
+      row('NIP Kepala Sekolah','nipKepsek','') +
+      row('Nama Guru Mapel','guru','') +
+      row('NIP Guru Mapel','nipGuru','') +
+      row('Tanggal Dokumen','tanggal','') +
+    '</div>' +
+    '<div class="panel-title spaced">Tanda Tangan Elektronik (QR Code)</div>' +
+    '<p class="lead" style="margin-bottom:14px">Klik tombol di bawah untuk membubuhkan QR tanda tangan elektronik pada kolom tanda tangan di seluruh dokumen (Kalender, Prota, Promes, Modul Ajar, KKTP, Kisi-kisi, Rubrik). QR berisi nama, jabatan, mata pelajaran, tanggal &amp; waktu penandatanganan — informasi ini langsung tampil begitu QR dipindai, tanpa perlu aplikasi khusus.</p>' +
+    ttdPanelRow('guru','Guru Mata Pelajaran', id.guru) +
+    ttdPanelRow('kepsek','Kepala Sekolah', id.kepsek) +
+    '<p class="field-hint" style="margin-top:10px">Catatan: ini adalah tanda tangan elektronik internal (QR + kode checksum) untuk verifikasi keaslian data di lingkungan sekolah. Ini bukan tanda tangan elektronik tersertifikasi resmi (bukan BSrE/PSrE Kominfo) yang punya kekuatan hukum setara tanda tangan basah untuk keperluan dinas ke luar sekolah.</p>' +
+  '</div></div>';
+}
+function ttdPanelRow(role, label, nama){
+  const waktu = ttdWaktu(role);
+  const status = waktu
+    ? '<span class="ttd-status"><b>&#10003; Sudah ditandatangani</b> · ' + esc(ttdTanggal(role)) + ' pukul ' + esc(waktu) + ' WIB</span>'
+    : '<span class="ttd-status">Belum ditandatangani</span>';
+  return '<div class="ttd-actions">' +
+    '<button class="btn btn-primary" onclick="ttdSign(\'' + role + '\')">' + ICON.pen + ' Tanda Tangani (' + esc(label) + ')</button>' +
+    (waktu ? '<button class="btn btn-ghost" onclick="ttdReset(\'' + role + '\')">Batalkan Tanda Tangan</button>' : '') +
+    status +
+  '</div>';
+}
+function ttdSign(role){
+  const id = STATE.identitas;
+  const nama = role === 'guru' ? id.guru : id.kepsek;
+  if (!nama){
+    alert('Isi terlebih dahulu nama ' + (role === 'guru' ? 'Guru Mata Pelajaran' : 'Kepala Sekolah') + ' sebelum menandatangani secara elektronik.');
+    return;
+  }
+  const now = new Date();
+  const waktu = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+  if (role === 'guru'){ id.waktuTtdGuru = waktu; id.tglTtdGuru = todayID(); }
+  else { id.waktuTtdKepsek = waktu; id.tglTtdKepsek = todayID(); }
+  if (!id.tanggal) id.tanggal = todayID();
+  save(); renderView(); refreshAllPapers();
+  showToast('Tanda tangan elektronik dibuat');
+}
+function ttdReset(role){
+  if (role === 'guru'){ STATE.identitas.waktuTtdGuru = ''; STATE.identitas.tglTtdGuru = ''; }
+  else { STATE.identitas.waktuTtdKepsek = ''; STATE.identitas.tglTtdKepsek = ''; }
+  save(); renderView(); refreshAllPapers();
+}
+function onIdentitasChange(key, val){
+  STATE.identitas[key] = val; save();
+  ['kalender-paper','prota-paper','promes-paper','modul-paper','kktp-paper','kisi-paper','rubrik-paper'].forEach(refreshPreview);
+}
+function refreshAllPapers(){
+  ['kalender-paper','prota-paper','promes-paper','modul-paper','kktp-paper','kisi-paper','rubrik-paper'].forEach(refreshPreview);
+}
+function onLogoUpload(inputEl){
+  const file = inputEl.files && inputEl.files[0];
+  if (!file) return;
+  if (!file.type || file.type.indexOf('image/') !== 0){
+    alert('Berkas harus berupa gambar (PNG, JPG, atau SVG).');
+    inputEl.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const img = new Image();
+    img.onload = function(){
+      const maxDim = 320;
+      let w = img.width || maxDim, h = img.height || maxDim;
+      if (w > maxDim || h > maxDim){
+        if (w >= h){ h = Math.round(h * maxDim / w); w = maxDim; }
+        else { w = Math.round(w * maxDim / h); h = maxDim; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h);
+      let dataUrl;
+      try{ dataUrl = canvas.toDataURL('image/png'); }
+      catch(err){ alert('Gagal memproses gambar. Coba gambar lain.'); return; }
+      STATE.identitas.logo = dataUrl;
+      save(); renderView(); refreshAllPapers();
+    };
+    img.onerror = function(){ alert('Gagal membaca gambar. Coba berkas lain.'); };
+    img.src = e.target.result;
+  };
+  reader.onerror = function(){ alert('Gagal membaca berkas.'); };
+  reader.readAsDataURL(file);
+}
+function onLogoRemove(){
+  STATE.identitas.logo = '';
+  save(); renderView(); refreshAllPapers();
+}
+
+/* ============================== KALENDER PENDIDIKAN ============================== */
+
+/* ---------- Tahun ajaran & minggu kalender ---------- */
+
+function tapelYears(){
+  const t = (STATE.identitas && STATE.identitas.tapel) || '';
+  const m = /(\d{4})\s*\/\s*(\d{4})/.exec(t);
+  if (m) return [parseInt(m[1],10), parseInt(m[2],10)];
+  const y = new Date().getFullYear();
+  return [y, y+1];
+}
+function kalenderBulanTahun(sem, bulan){
+  const [y1,y2] = tapelYears();
+  return sem === 'Ganjil' ? y1 : y2;
+}
+function pad2(n){ return n < 10 ? '0'+n : ''+n; }
+function tglKey(y, m, d){ return y + '-' + pad2(m+1) + '-' + pad2(d); }
+
+// Membangun daftar minggu (Senin–Sabtu, 6 hari sekolah) yang "dimiliki" oleh sebuah bulan,
+// yaitu minggu-minggu yang hari Senin-nya jatuh pada bulan & tahun tersebut.
+function buildMonthWeeks(sem, bulan){
+  const year = kalenderBulanTahun(sem, bulan);
+  const monthIdx = MONTH_IDX[bulan];
+  const first = new Date(year, monthIdx, 1);
+  const offset = (first.getDay() + 6) % 7; // jarak dari Senin (0=Senin ... 6=Minggu)
+  let cursor = new Date(year, monthIdx, 1 - offset);
+  if (cursor.getMonth() !== monthIdx || cursor.getFullYear() !== year){
+    cursor = new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate() + 7);
+  }
+  const weeks = [];
+  while (cursor.getMonth() === monthIdx && cursor.getFullYear() === year){
+    const week = [];
+    for (let i = 0; i < 6; i++){ // Senin..Sabtu
+      const d = new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate() + i);
+      week.push({
+        y: d.getFullYear(), m: d.getMonth(), d: d.getDate(),
+        inMonth: d.getMonth() === monthIdx && d.getFullYear() === year,
+        key: tglKey(d.getFullYear(), d.getMonth(), d.getDate()),
+      });
+    }
+    weeks.push(week);
+    cursor = new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate() + 7);
+  }
+  return weeks;
+}
+function isLiburTgl(key){ return !!(STATE.kalender.libur && STATE.kalender.libur[key]); }
+function weekIsEfektif(week){ return !week.some(d => isLiburTgl(d.key)); } // tidak efektif jika ADA min. 1 hari libur
+
+function kalenderBulanEfektif(sem, b){
+  return buildMonthWeeks(sem, b).filter(weekIsEfektif).length;
+}
+function kalenderBulanTidak(sem, b){
+  const weeks = buildMonthWeeks(sem, b);
+  return weeks.length - weeks.filter(weekIsEfektif).length;
+}
+function kalenderTotalEfektif(sem){
+  const list = sem === 'Ganjil' ? BULAN_GANJIL : BULAN_GENAP;
+  return list.reduce((a,b) => a + kalenderBulanEfektif(sem,b), 0);
+}
+function kalenderTotalTidak(sem){
+  const list = sem === 'Ganjil' ? BULAN_GANJIL : BULAN_GENAP;
+  return list.reduce((a,b) => a + kalenderBulanTidak(sem,b), 0);
+}
+function kalenderJP(sem){
+  return kalenderTotalEfektif(sem) * (parseInt(STATE.kalender.jpPerMinggu)||0);
+}
+
+function viewKalender(){
+  const bulanList = KAL_SEMESTER === 'Ganjil' ? BULAN_GANJIL : BULAN_GENAP;
+  const tahun = KAL_SEMESTER === 'Ganjil' ? tapelYears()[0] : tapelYears()[1];
+  const segmented = '<div class="segmented no-print">' + ['Ganjil','Genap'].map(s =>
+    '<button class="' + (KAL_SEMESTER===s?'active':'') + '" onclick="setKalSemester(\'' + s + '\')">' + s + '</button>').join('') + '</div>';
+
+  return '<div class="view">' +
+    viewHead('Dokumen 1','Kalender Pendidikan','Tandai hari libur pada kalender tiap bulan. Minggu efektif, minggu tidak efektif, dan JP tersedia dihitung otomatis dan menjadi dasar perhitungan Program Tahunan & Program Semester.', segmented) +
+    '<div class="panel no-print">' +
+      '<div class="panel-title">Pengaturan Umum</div>' +
+      '<div class="form-grid">' +
+        field('Jam Pelajaran (JP) per Minggu', '<input class="ti" type="number" min="0" value="' + esc(STATE.kalender.jpPerMinggu) + '" oninput="onKalenderJpChange(this.value)" />', false, 'Jumlah JP tatap muka mata pelajaran ini setiap minggunya; otomatis mengisi tiap minggu efektif pada Promes.') +
+      '</div>' +
+      '<p class="tiny-hint">Hari sekolah: Senin–Sabtu (6 hari). Klik satu tanggal untuk menandai/membatalkan hari libur. Sebuah minggu dihitung <b>tidak efektif</b> jika ada minimal 1 hari libur pada minggu itu.</p>' +
+      '<div class="panel-title spaced">Kalender Libur — Semester ' + KAL_SEMESTER + ' ' + tahun + '</div>' +
+      '<div class="kal-month-grid" id="kal-month-grid">' + bulanList.map(b => kalMonthCardHtml(KAL_SEMESTER, b)).join('') + '</div>' +
+      '<div class="kal-summary">' +
+        '<div class="kal-summary-card"><div class="kal-summary-value" id="kal-sum-efektif">' + kalenderTotalEfektif(KAL_SEMESTER) + ' minggu</div><div class="kal-summary-label">Total Minggu Efektif</div></div>' +
+        '<div class="kal-summary-card"><div class="kal-summary-value" id="kal-sum-tidak">' + kalenderTotalTidak(KAL_SEMESTER) + ' minggu</div><div class="kal-summary-label">Total Minggu Tidak Efektif</div></div>' +
+        '<div class="kal-summary-card"><div class="kal-summary-value" id="kal-sum-jp">' + kalenderJP(KAL_SEMESTER) + ' JP</div><div class="kal-summary-label">Total JP Tersedia Semester Ini</div></div>' +
+      '</div>' +
+      '<p class="tiny-hint">Total JP Tersedia = Total Minggu Efektif × JP per Minggu. Angka ini otomatis dipakai untuk memeriksa kewajaran alokasi jam pada Program Tahunan dan Program Semester.</p>' +
+    '</div>' +
+    '<div class="paper print-area" id="kalender-paper">' + kalenderPaperHtml() + '</div>' +
+  '</div>';
+}
+function kalMonthCardHtml(sem, bulan){
+  const weeks = buildMonthWeeks(sem, bulan);
+  const efektif = weeks.filter(weekIsEfektif).length;
+  const tidak = weeks.length - efektif;
+  const bln = STATE.kalender[sem][bulan];
+  const rows = weeks.map(week => {
+    const off = !weekIsEfektif(week);
+    const cells = week.map(day => {
+      const libur = isLiburTgl(day.key);
+      const cls = 'kal-day' + (libur ? ' libur' : '') + (!day.inMonth ? ' spill' : '');
+      const title = day.d + ' ' + MONTH_NAMES[day.m] + ' ' + day.y + (libur ? ' — Libur' : '');
+      return '<td><button type="button" class="' + cls + '" title="' + esc(title) + '" onclick="toggleLiburTgl(\'' + day.key + '\')">' + day.d + '</button></td>';
+    }).join('');
+    return '<tr class="' + (off ? 'kal-week-off' : '') + '">' + cells + '</tr>';
+  }).join('');
+  return '<div class="kal-month-card">' +
+    '<div class="kal-month-head"><span class="kal-month-name">' + esc(bulan) + '</span>' +
+      '<span class="kal-month-badges"><span class="kal-badge kal-badge-ok">' + efektif + ' efektif</span><span class="kal-badge kal-badge-off">' + tidak + ' tidak efektif</span></span>' +
+    '</div>' +
+    '<table class="kal-cal"><thead><tr>' + HARI_SINGKAT.map(h => '<th>'+h+'</th>').join('') + '</tr></thead><tbody>' + rows + '</tbody></table>' +
+    '<input class="ti kal-month-ket" value="' + esc(bln.ket) + '" placeholder="Keterangan tambahan (MPLS, PTS, PAS, dll.)" oninput="onKalenderKetChange(\'' + sem + '\',\'' + bulan + '\',this.value)" />' +
+  '</div>';
+}
+function kalenderRowsHtml(sem, bulanList){
+  return bulanList.map((b,i) => {
+    const bln = STATE.kalender[sem][b];
+    return '<tr><td class="num">' + (i+1) + '</td><td>' + esc(b) + '</td><td class="num">' + kalenderBulanEfektif(sem,b) + '</td><td class="num">' + kalenderBulanTidak(sem,b) + '</td><td>' + esc(bln.ket||'-') + '</td></tr>';
+  }).join('');
+}
+function kalenderSemesterPaperHtml(sem, bulanList){
+  const id = STATE.identitas;
+  const jp = parseInt(STATE.kalender.jpPerMinggu)||0;
+  const totalEfektif = kalenderTotalEfektif(sem);
+  const totalTidak = kalenderTotalTidak(sem);
+  return kopHtml('KALENDER PENDIDIKAN', 'Semester ' + sem + ' · Mata Pelajaran: ' + (id.mapel||'-') + ' · Fase ' + id.fase + ' / Kelas ' + id.kelas + ' · Tahun Ajaran ' + id.tapel) +
+    '<table class="info-table"><tbody><tr><td>Jam Pelajaran per Minggu</td><td>' + jp + ' JP</td><td>Total Minggu Efektif</td><td>' + totalEfektif + ' minggu</td></tr></tbody></table>' +
+    '<table class="print-table"><thead><tr><th>No</th><th>Bulan</th><th>Minggu Efektif</th><th>Minggu Tidak Efektif</th><th>Keterangan</th></tr></thead><tbody>' + kalenderRowsHtml(sem, bulanList) +
+    '</tbody><tfoot><tr><td colspan="2" class="tf-label">Jumlah</td><td class="num tf-value">' + totalEfektif + '</td><td class="num tf-value">' + totalTidak + '</td><td>' + kalenderJP(sem) + ' JP tersedia</td></tr></tfoot></table>' +
+    signBlockHtml('KALENDER PENDIDIKAN');
+}
+function kalenderPaperHtml(){
+  return '<div class="kalender-semester-page">' + kalenderSemesterPaperHtml('Ganjil', BULAN_GANJIL) + '</div>' +
+    '<div class="kalender-semester-page">' + kalenderSemesterPaperHtml('Genap', BULAN_GENAP) + '</div>';
+}
+function updateKalenderTotals(){
+  const ef = document.getElementById('kal-sum-efektif');
+  const td = document.getElementById('kal-sum-tidak');
+  const jp = document.getElementById('kal-sum-jp');
+  if (ef) ef.textContent = kalenderTotalEfektif(KAL_SEMESTER) + ' minggu';
+  if (td) td.textContent = kalenderTotalTidak(KAL_SEMESTER) + ' minggu';
+  if (jp) jp.textContent = kalenderJP(KAL_SEMESTER) + ' JP';
+}
+function onKalenderJpChange(val){
+  STATE.kalender.jpPerMinggu = val === '' ? '' : (parseInt(val)||0);
+  save(); updateKalenderTotals(); refreshPreview('kalender-paper');
+}
+function onKalenderKetChange(sem, b, val){
+  const bln = STATE.kalender[sem][b]; if (!bln) return;
+  bln.ket = val; save(); refreshPreview('kalender-paper');
+}
+function toggleLiburTgl(key){
+  if (!STATE.kalender.libur) STATE.kalender.libur = {};
+  if (STATE.kalender.libur[key]) delete STATE.kalender.libur[key];
+  else STATE.kalender.libur[key] = true;
+  save(); renderView();
+}
+function setKalSemester(s){ KAL_SEMESTER = s; renderView(); }
+
+/* ---------- Validasi otomatis terhadap Kalender Pendidikan ---------- */
+
+function warningsHtml(warnings){
+  if (!warnings || !warnings.length) return '';
+  const cls = { danger:'notice notice-danger', info:'notice notice-info', ok:'notice notice-ok' };
+  return '<div class="notice-stack no-print">' + warnings.map(w =>
+    '<div class="' + (cls[w.type]||'notice') + '">' + ICON.alert + '<span>' + esc(w.text) + '</span></div>'
+  ).join('') + '</div>';
+}
+function protaWarnings(rows){
+  const warnings = [];
+  ['Ganjil','Genap'].forEach(sem => {
+    const total = rows.filter(r => r.semester === sem).reduce((a,r) => a + (parseInt(r.alokasi)||0), 0);
+    if (total <= 0) return;
+    const efektif = kalenderTotalEfektif(sem);
+    const avail = kalenderJP(sem);
+    if (efektif === 0){
+      warnings.push({ type:'info', text:'Kalender Pendidikan Semester ' + sem + ' belum diisi, sehingga alokasi ' + total + ' JP pada semester ini belum dapat diperiksa kesesuaiannya. Lengkapi di menu Kalender Pendidikan.' });
+    } else if (total > avail){
+      warnings.push({ type:'danger', text:'Alokasi JP Semester ' + sem + ' (' + total + ' JP) melebihi JP tersedia menurut Kalender Pendidikan (' + avail + ' JP dari ' + efektif + ' minggu efektif × ' + (parseInt(STATE.kalender.jpPerMinggu)||0) + ' JP/minggu). Kurangi alokasi atau perbarui Kalender Pendidikan.' });
+    }
+  });
+  return warnings;
+}
+function promesWarnings(sem, bulanList, rows){
+  const warnings = [];
+  const efektifSem = kalenderTotalEfektif(sem);
+  const jpMinggu = parseInt(STATE.kalender.jpPerMinggu)||0;
+  const monthsOver = [];
+  bulanList.forEach(b => {
+    const total = rows.reduce((a,r) => a + (parseInt(r.bulan[b])||0), 0);
+    if (total <= 0) return;
+    const bEfektif = kalenderBulanEfektif(sem, b);
+    const bAvail = bEfektif * jpMinggu;
+    if (efektifSem === 0) return;
+    if (bEfektif === 0){
+      warnings.push({ type:'danger', text:'Bulan ' + b + ' pada Kalender Pendidikan tercatat 0 minggu efektif, namun Program Semester mengalokasikan ' + total + ' JP pada bulan tersebut.' });
+      monthsOver.push(b);
+    } else if (total > bAvail){
+      warnings.push({ type:'danger', text:'Alokasi bulan ' + b + ' (' + total + ' JP) melebihi kapasitas efektif kalender (' + bAvail + ' JP dari ' + bEfektif + ' minggu efektif).' });
+      monthsOver.push(b);
+    }
+  });
+  if (efektifSem === 0){
+    const anyIsi = rows.some(r => bulanList.some(b => (parseInt(r.bulan[b])||0) > 0));
+    if (anyIsi) warnings.unshift({ type:'info', text:'Kalender Pendidikan Semester ' + sem + ' belum diisi, sehingga alokasi bulanan belum dapat diperiksa kesesuaiannya. Lengkapi di menu Kalender Pendidikan.' });
+  }
+  warnings.monthsOver = monthsOver;
+  return warnings;
+}
+
+/* ============================== PROGRAM TAHUNAN ============================== */
+
+function viewProta(){
+  const rows = STATE.prota;
+  const warnings = protaWarnings(rows);
+  return '<div class="view">' +
+    viewHead('Dokumen 2','Program Tahunan (Prota)','Petakan elemen, capaian pembelajaran, dan alokasi jam pelajaran untuk satu tahun ajaran penuh.') +
+    warningsHtml(warnings) +
+    '<div class="panel no-print"><div class="panel-title">Data Program Tahunan</div>' +
+    '<div class="table-wrap"><table class="edit-table"><thead><tr>' +
+      '<th style="width:32px">No</th><th>Elemen</th><th>Capaian / Tujuan Pembelajaran</th>' +
+      '<th style="width:90px">JP</th><th style="width:110px">Semester</th><th>Keterangan</th><th style="width:36px"></th>' +
+    '</tr></thead><tbody id="prota-tbody">' + rows.map((r,i) => protaRowHtml(r,i)).join('') + '</tbody></table></div>' +
+    '<button class="btn btn-outline" onclick="addProtaRow()">' + ICON.plus + ' Tambah Baris</button></div>' +
+    '<div class="panel no-print"><div class="panel-title">Rekapitulasi Minggu Efektif per Bulan (otomatis dari Kalender Pendidikan)</div>' +
+    '<div class="table-wrap"><table class="edit-table"><thead><tr>' +
+      '<th style="width:32px">No</th><th>Bulan</th><th style="width:110px">Semester</th><th style="width:110px">Minggu Efektif</th>' +
+    '</tr></thead><tbody>' + protaRekapBulanHtml() + '</tbody></table></div>' +
+    '<p class="tiny-hint">Angka minggu efektif diambil otomatis dari menu Kalender Pendidikan dan akan ikut berubah bila hari libur diperbarui di sana.</p></div>' +
+    '<div class="paper print-area" id="prota-paper">' + protaPaperHtml() + '</div>' +
+  '</div>';
+}
+function protaRekapBulanHtml(){
+  const list = BULAN_GANJIL.map(b => ({ sem:'Ganjil', b })).concat(BULAN_GENAP.map(b => ({ sem:'Genap', b })));
+  return list.map((x,i) => '<tr><td class="num">' + (i+1) + '</td><td>' + esc(x.b) + '</td><td>' + x.sem + '</td><td class="num">' + kalenderBulanEfektif(x.sem, x.b) + ' minggu</td></tr>').join('');
+}
+function protaRowHtml(r,i){
+  return '<tr id="prota-row-' + r.id + '">' +
+    '<td class="num">' + (i+1) + '</td>' +
+    '<td><textarea class="ta" rows="2" placeholder="Bilangan / Aljabar" oninput="onProtaChange(\'' + r.id + '\',\'elemen\',this.value)">' + esc(r.elemen) + '</textarea></td>' +
+    '<td><textarea class="ta" rows="2" placeholder="Peserta didik dapat..." oninput="onProtaChange(\'' + r.id + '\',\'capaian\',this.value)">' + esc(r.capaian) + '</textarea></td>' +
+    '<td><input class="ti" type="number" value="' + esc(r.alokasi) + '" oninput="onProtaChange(\'' + r.id + '\',\'alokasi\',this.value)" /></td>' +
+    '<td>' + selectHtml(['Ganjil','Genap'], r.semester, "onProtaChange('" + r.id + "','semester',this.value)") + '</td>' +
+    '<td><input class="ti" value="' + esc(r.keterangan) + '" oninput="onProtaChange(\'' + r.id + '\',\'keterangan\',this.value)" /></td>' +
+    '<td><button class="icon-btn danger" onclick="delProtaRow(\'' + r.id + '\')">' + ICON.trash + '</button></td>' +
+  '</tr>';
+}
+function protaPaperHtml(){
+  const id = STATE.identitas, rows = STATE.prota;
+  const total = rows.reduce((a,r) => a + (parseInt(r.alokasi)||0), 0);
+  return kopHtml('PROGRAM TAHUNAN', 'Mata Pelajaran: ' + (id.mapel||'-') + ' · Fase ' + id.fase + ' / Kelas ' + id.kelas + ' · Tahun Ajaran ' + id.tapel) +
+    '<table class="print-table"><thead><tr><th>No</th><th>Elemen</th><th>Capaian / Tujuan Pembelajaran</th><th>JP</th><th>Semester</th><th>Ket.</th></tr></thead><tbody>' +
+    rows.map((r,i) => '<tr><td class="num">' + (i+1) + '</td><td>' + nl2br(r.elemen) + '</td><td>' + nl2br(r.capaian) + '</td><td class="num">' + esc(r.alokasi) + '</td><td>' + esc(r.semester) + '</td><td>' + esc(r.keterangan) + '</td></tr>').join('') +
+    '</tbody><tfoot><tr><td colspan="3" class="tf-label">Total Alokasi Waktu</td><td class="num tf-value">' + total + ' JP</td><td colspan="2"></td></tr></tfoot></table>' +
+    signBlockHtml('PROGRAM TAHUNAN');
+}
+function onProtaChange(id, key, val){
+  const r = STATE.prota.find(x => x.id === id); if (!r) return;
+  r[key] = val; save(); refreshPreview('prota-paper');
+}
+function addProtaRow(){ STATE.prota.push(emptyProtaRow()); save(); renderView(); }
+function delProtaRow(id){ STATE.prota = STATE.prota.filter(r => r.id !== id); save(); renderView(); }
+
+/* ============================== PROGRAM SEMESTER ============================== */
+
+function viewPromes(){
+  const bulanList = SEMESTER === 'Ganjil' ? BULAN_GANJIL : BULAN_GENAP;
+  const rows = STATE.promes[SEMESTER];
+  const segmented = '<div class="segmented no-print">' + ['Ganjil','Genap'].map(s =>
+    '<button class="' + (SEMESTER===s?'active':'') + '" onclick="setSemester(\'' + s + '\')">' + s + '</button>').join('') + '</div>';
+  const warnings = promesWarnings(SEMESTER, bulanList, rows);
+  const monthsOver = warnings.monthsOver || [];
+
+  return '<div class="view">' +
+    viewHead('Dokumen 3','Program Semester (Promes)','Distribusikan setiap tujuan pembelajaran ke bulan-bulan berjalan dalam satu semester.', segmented) +
+    warningsHtml(warnings) +
+    '<div class="panel no-print"><div class="panel-title">Data Program Semester — ' + SEMESTER + '</div>' +
+    '<div class="table-wrap"><table class="edit-table"><thead><tr>' +
+      '<th style="width:32px">No</th><th>Tujuan Pembelajaran</th><th style="width:70px">JP</th>' +
+      bulanList.map(b => '<th style="width:64px" class="' + (monthsOver.indexOf(b)>=0?'warn':'') + '" title="' + esc(kalenderBulanEfektif(SEMESTER,b) + ' minggu efektif') + '">' + b.slice(0,3) + '</th>').join('') + '<th style="width:36px"></th>' +
+      '</tr><tr class="efektif-row"><td colspan="3" class="efektif-label">Minggu Efektif (dari Kalender Pendidikan)</td>' +
+      bulanList.map(b => '<td class="num">' + kalenderBulanEfektif(SEMESTER,b) + '</td>').join('') + '<td></td></tr>' +
+    '</thead><tbody id="promes-tbody">' + rows.map((r,i) => promesRowHtml(r,i,bulanList)).join('') + '</tbody></table></div>' +
+    '<button class="btn btn-outline" onclick="addPromesRow()">' + ICON.plus + ' Tambah Baris</button></div>' +
+    '<div class="paper print-area" id="promes-paper">' + promesPaperHtml(bulanList) + '</div>' +
+  '</div>';
+}
+function promesRowHtml(r,i,bulanList){
+  return '<tr id="promes-row-' + r.id + '">' +
+    '<td class="num">' + (i+1) + '</td>' +
+    '<td><textarea class="ta" rows="2" placeholder="Peserta didik mampu..." oninput="onPromesChange(\'' + r.id + '\',\'tujuan\',this.value)">' + esc(r.tujuan) + '</textarea></td>' +
+    '<td><input class="ti" type="number" value="' + esc(r.alokasi) + '" oninput="onPromesChange(\'' + r.id + '\',\'alokasi\',this.value)" /></td>' +
+    bulanList.map(b => '<td><input class="ti cell-small" value="' + esc(r.bulan[b]||'') + '" placeholder="-" oninput="onPromesBulanChange(\'' + r.id + '\',\'' + b + '\',this.value)" /></td>').join('') +
+    '<td><button class="icon-btn danger" onclick="delPromesRow(\'' + r.id + '\')">' + ICON.trash + '</button></td>' +
+  '</tr>';
+}
+function promesPaperHtml(bulanList){
+  const id = STATE.identitas, rows = STATE.promes[SEMESTER];
+  return kopHtml('PROGRAM SEMESTER', 'Mata Pelajaran: ' + (id.mapel||'-') + ' · Semester ' + SEMESTER + ' · Fase ' + id.fase + ' / Kelas ' + id.kelas + ' · TA ' + id.tapel) +
+    '<table class="print-table small"><thead><tr><th>No</th><th>Tujuan Pembelajaran</th><th>JP</th>' +
+    bulanList.map(b => '<th>' + b.slice(0,3) + '</th>').join('') + '</tr>' +
+    '<tr class="efektif-row"><td colspan="3">Minggu Efektif</td>' +
+    bulanList.map(b => '<td class="num">' + kalenderBulanEfektif(SEMESTER,b) + '</td>').join('') + '</tr>' +
+    '</thead><tbody>' +
+    rows.map((r,i) => '<tr><td class="num">' + (i+1) + '</td><td>' + nl2br(r.tujuan) + '</td><td class="num">' + esc(r.alokasi) + '</td>' +
+      bulanList.map(b => '<td class="num">' + esc(r.bulan[b]||'') + '</td>').join('') + '</tr>').join('') +
+    '</tbody></table>' + signBlockHtml('PROGRAM SEMESTER');
+}
+function onPromesChange(id, key, val){
+  const r = STATE.promes[SEMESTER].find(x => x.id === id); if (!r) return;
+  r[key] = val; save(); refreshPreview('promes-paper');
+}
+function onPromesBulanChange(id, bln, val){
+  const r = STATE.promes[SEMESTER].find(x => x.id === id); if (!r) return;
+  r.bulan[bln] = val; save(); refreshPreview('promes-paper');
+}
+function setSemester(s){ SEMESTER = s; renderView(); }
+function addPromesRow(){ STATE.promes[SEMESTER].push(emptyPromesRow()); save(); renderView(); }
+function delPromesRow(id){ STATE.promes[SEMESTER] = STATE.promes[SEMESTER].filter(r => r.id !== id); save(); renderView(); }
+
+/* ============================== MODUL AJAR ============================== */
+
+function viewModul(){
+  const list = STATE.modulList;
+  if (!ACTIVE_MODUL_ID || !list.find(m => m.id === ACTIVE_MODUL_ID)) ACTIVE_MODUL_ID = list[0].id;
+  const modul = list.find(m => m.id === ACTIVE_MODUL_ID);
+
+  return '<div class="view">' +
+    viewHead('Dokumen 4','Modul Ajar','Susun rancangan pembelajaran lengkap sesuai prinsip Kurikulum Merdeka.') +
+    '<div class="list-layout">' +
+      '<div class="side-list no-print">' +
+        '<div class="side-list-head"><span>Daftar Modul</span><button class="icon-btn" onclick="addModul()">' + ICON.plus + '</button></div>' +
+        '<div id="modul-list-items">' + list.map(m => modulListItemHtml(m)).join('') + '</div>' +
+      '</div>' +
+      '<div class="modul-main">' +
+        '<div id="modul-editor">' + modulEditorHtml(modul) + '</div>' +
+        '<div class="paper print-area" id="modul-paper">' + modulPaperHtml(modul) + '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+function modulListItemHtml(m){
+  const active = m.id === ACTIVE_MODUL_ID;
+  return '<div class="list-item ' + (active?'active':'') + '" onclick="selectModul(\'' + m.id + '\')">' + ICON.pen +
+    '<span class="list-item-title">' + esc(m.judul || 'Tanpa judul') + '</span>' +
+    '<div class="list-item-actions">' +
+      '<button class="icon-btn xs" title="Duplikat" onclick="event.stopPropagation(); duplicateModul(\'' + m.id + '\')">' + ICON.copy + '</button>' +
+      (STATE.modulList.length > 1 ? '<button class="icon-btn xs danger" title="Hapus" onclick="event.stopPropagation(); delModul(\'' + m.id + '\')">' + ICON.trash + '</button>' : '') +
+    '</div></div>';
+}
+function modulEditorHtml(m){
+  const t = (label,key,full) => field(label, '<input class="ti" value="' + esc(m[key]) + '" oninput="onModulChange(\'' + key + '\',this.value)" />', full);
+  const ta = (label,key,rows,full) => field(label, '<textarea class="ta" rows="' + rows + '" oninput="onModulChange(\'' + key + '\',this.value)">' + esc(m[key]) + '</textarea>', full);
+
+  return '<div class="panel no-print">' +
+    '<div class="panel-title">Judul Modul</div>' +
+    '<input class="ti" value="' + esc(m.judul) + '" placeholder="Modul Ajar: Fungsi Kuadrat" oninput="onModulChange(\'judul\',this.value)" />' +
+    '<div class="panel-title spaced">A. Informasi Umum</div>' +
+    '<div class="form-grid">' +
+      t('Nama Penyusun','penyusun') + t('Institusi','institusi') +
+      t('Tahun Penyusunan','tahun') + t('Jenjang','jenjang') +
+      field('Fase', selectHtml(FASE_OPTIONS, m.fase, "onModulChange('fase', this.value)")) +
+      t('Kelas','kelas') + t('Alokasi Waktu','alokasiWaktu') + t('Elemen','elemen') +
+      t('Model Pembelajaran','modelPembelajaran') + t('Target Peserta Didik','targetPesertaDidik') +
+      ta('Kompetensi Awal','kompetensiAwal',2,true) +
+      ta('Dimensi Profil Lulusan','profilPelajar',2,true) +
+      ta('Sarana & Prasarana','saranaPrasarana',2,true) +
+    '</div>' +
+    '<div class="panel-title spaced">B. Komponen Inti</div>' +
+    '<div class="form-grid">' +
+      ta('Tujuan Pembelajaran','tujuanPembelajaran',3,true) +
+      ta('Pemahaman Bermakna','pemahamanBermakna',2,true) +
+      ta('Pertanyaan Pemantik','pertanyaanPemantik',2,true) +
+    '</div>' +
+    '<div class="panel-title spaced">Kegiatan Pembelajaran</div>' +
+    '<div class="kegiatan-list" id="kegiatan-list">' + m.kegiatan.map(k => kegiatanRowHtml(k)).join('') + '</div>' +
+    '<button class="btn btn-outline" onclick="addKegiatan()">' + ICON.plus + ' Tambah Langkah</button>' +
+    '<div class="panel-title spaced">Asesmen</div>' +
+    '<div class="form-grid">' +
+      ta('Asesmen Diagnostik','asesmenDiagnostik',2,true) +
+      ta('Asesmen Formatif','asesmenFormatif',2,true) +
+      ta('Asesmen Sumatif','asesmenSumatif',2,true) +
+      ta('Pengayaan','pengayaan',2) + ta('Remedial','remedial',2) +
+    '</div>' +
+    '<div class="panel-title spaced">C. Lampiran</div>' +
+    '<div class="form-grid">' +
+      ta('Bahan Bacaan Guru & Siswa','bahanBacaan',2,true) +
+      ta('Glosarium','glosarium',2,true) +
+      ta('Daftar Pustaka','daftarPustaka',2,true) +
+    '</div>' +
+  '</div>';
+}
+function kegiatanRowHtml(k){
+  return '<div class="kegiatan-row" id="keg-' + k.id + '">' +
+    selectHtml(['Pendahuluan','Inti','Penutup'], k.tahap, "onKegiatanChange('" + k.id + "','tahap',this.value)") +
+    '<textarea class="ta" rows="2" placeholder="Deskripsi aktivitas..." oninput="onKegiatanChange(\'' + k.id + '\',\'deskripsi\',this.value)">' + esc(k.deskripsi) + '</textarea>' +
+    '<input class="ti waktu-input" value="' + esc(k.waktu) + '" placeholder="10 menit" oninput="onKegiatanChange(\'' + k.id + '\',\'waktu\',this.value)" />' +
+    '<button class="icon-btn danger" onclick="delKegiatan(\'' + k.id + '\')">' + ICON.trash + '</button>' +
+  '</div>';
+}
+function modulPaperHtml(m){
+  const id = STATE.identitas;
+  return kopHtml('MODUL AJAR', m.judul) +
+    '<h3 class="sect">A. Informasi Umum</h3>' +
+    '<table class="info-table"><tbody>' +
+      '<tr><td>Penyusun</td><td>' + esc(m.penyusun||'-') + '</td><td>Institusi</td><td>' + esc(m.institusi||'-') + '</td></tr>' +
+      '<tr><td>Jenjang / Kelas</td><td>' + esc(m.jenjang) + ' / ' + esc(m.kelas||id.kelas) + '</td><td>Fase</td><td>' + esc(m.fase) + '</td></tr>' +
+      '<tr><td>Alokasi Waktu</td><td>' + esc(m.alokasiWaktu) + '</td><td>Tahun</td><td>' + esc(m.tahun) + '</td></tr>' +
+      '<tr><td>Elemen</td><td colspan="3">' + esc(m.elemen||'-') + '</td></tr>' +
+      '<tr><td>Model Pembelajaran</td><td>' + esc(m.modelPembelajaran) + '</td><td>Target Peserta Didik</td><td>' + esc(m.targetPesertaDidik) + '</td></tr>' +
+    '</tbody></table>' +
+    '<p><b>Kompetensi Awal:</b> ' + nl2br(m.kompetensiAwal||'-') + '</p>' +
+    '<p><b>Profil Pelajar Pancasila:</b> ' + nl2br(m.profilPelajar||'-') + '</p>' +
+    '<p><b>Sarana &amp; Prasarana:</b> ' + nl2br(m.saranaPrasarana||'-') + '</p>' +
+    '<h3 class="sect">B. Komponen Inti</h3>' +
+    '<p><b>Tujuan Pembelajaran</b></p><p class="pre">' + nl2br(m.tujuanPembelajaran||'-') + '</p>' +
+    '<p><b>Pemahaman Bermakna</b></p><p class="pre">' + nl2br(m.pemahamanBermakna||'-') + '</p>' +
+    '<p><b>Pertanyaan Pemantik</b></p><p class="pre">' + nl2br(m.pertanyaanPemantik||'-') + '</p>' +
+    '<p><b>Kegiatan Pembelajaran</b></p>' +
+    '<table class="print-table"><thead><tr><th style="width:100px">Tahap</th><th>Deskripsi Aktivitas</th><th style="width:90px">Waktu</th></tr></thead><tbody>' +
+    m.kegiatan.map(k => '<tr><td>' + esc(k.tahap) + '</td><td>' + nl2br(k.deskripsi) + '</td><td class="num">' + esc(k.waktu) + '</td></tr>').join('') +
+    '</tbody></table>' +
+    '<p><b>Asesmen Diagnostik:</b> ' + nl2br(m.asesmenDiagnostik||'-') + '</p>' +
+    '<p><b>Asesmen Formatif:</b> ' + nl2br(m.asesmenFormatif||'-') + '</p>' +
+    '<p><b>Asesmen Sumatif:</b> ' + nl2br(m.asesmenSumatif||'-') + '</p>' +
+    '<p><b>Pengayaan:</b> ' + nl2br(m.pengayaan||'-') + '</p>' +
+    '<p><b>Remedial:</b> ' + nl2br(m.remedial||'-') + '</p>' +
+    '<h3 class="sect">C. Lampiran</h3>' +
+    '<p><b>Bahan Bacaan:</b> ' + nl2br(m.bahanBacaan||'-') + '</p>' +
+    '<p><b>Glosarium:</b> ' + nl2br(m.glosarium||'-') + '</p>' +
+    '<p><b>Daftar Pustaka:</b> ' + nl2br(m.daftarPustaka||'-') + '</p>' +
+    signBlockHtml('MODUL AJAR - ' + m.judul);
+}
+function currentModul(){ return STATE.modulList.find(m => m.id === ACTIVE_MODUL_ID); }
+function onModulChange(key, val){
+  const m = currentModul(); if (!m) return;
+  m[key] = val; save();
+  refreshPreview('modul-paper');
+  if (key === 'judul'){
+    const item = document.querySelector('#modul-list-items .list-item.active .list-item-title');
+    if (item) item.textContent = val || 'Tanpa judul';
+  }
+}
+function onKegiatanChange(id, key, val){
+  const m = currentModul(); if (!m) return;
+  const k = m.kegiatan.find(x => x.id === id); if (!k) return;
+  k[key] = val; save(); refreshPreview('modul-paper');
+}
+function addKegiatan(){ const m = currentModul(); m.kegiatan.push(emptyKegiatan()); save(); renderView(); }
+function delKegiatan(id){ const m = currentModul(); m.kegiatan = m.kegiatan.filter(k => k.id !== id); save(); renderView(); }
+function selectModul(id){ ACTIVE_MODUL_ID = id; renderView(); }
+function addModul(){ const m = emptyModul(); STATE.modulList.push(m); ACTIVE_MODUL_ID = m.id; save(); renderView(); }
+function delModul(id){
+  STATE.modulList = STATE.modulList.filter(m => m.id !== id);
+  if (STATE.modulList.length === 0) STATE.modulList.push(emptyModul());
+  if (ACTIVE_MODUL_ID === id) ACTIVE_MODUL_ID = STATE.modulList[0].id;
+  save(); renderView();
+}
+function duplicateModul(id){
+  const src = STATE.modulList.find(m => m.id === id);
+  const copy = JSON.parse(JSON.stringify(src));
+  copy.id = uid(); copy.judul = src.judul + ' (Salinan)';
+  copy.kegiatan = copy.kegiatan.map(k => Object.assign({}, k, { id: uid() }));
+  STATE.modulList.push(copy); ACTIVE_MODUL_ID = copy.id; save(); renderView();
+}
+
+/* ============================== ANALISIS KKTP / KKM ============================== */
+
+function viewKktp(){
+  return '<div class="view">' +
+    viewHead('Dokumen 5','Analisis KKTP (dahulu KKM)','Kriteria Ketercapaian Tujuan Pembelajaran dihitung dari kompleksitas materi, daya dukung, dan intake peserta didik — menyambungkan istilah KKM lama dengan pendekatan KKTP pada Kurikulum Merdeka.') +
+    '<div class="panel no-print"><div class="panel-title">Data Analisis</div>' +
+    '<div class="table-wrap"><table class="edit-table"><thead><tr>' +
+      '<th style="width:32px">No</th><th>Capaian Kompetensi</th><th>Tujuan Pembelajaran</th><th style="width:120px">Kompleksitas</th>' +
+      '<th style="width:120px">Daya Dukung</th><th style="width:120px">Intake Siswa</th><th style="width:90px">Nilai</th><th style="width:36px"></th>' +
+    '</tr></thead><tbody id="kktp-tbody">' + STATE.kktp.map((r,i) => kktpRowHtml(r,i)).join('') + '</tbody></table></div>' +
+    '<button class="btn btn-outline" onclick="addKktpRow()">' + ICON.plus + ' Tambah Baris</button>' +
+    '<p class="tiny-hint">Isi setiap aspek dengan skala 0–100. Semakin sederhana materi, semakin tinggi daya dukung, dan semakin tinggi intake, semakin tinggi nilai KKTP.</p></div>' +
+    '<div class="paper print-area" id="kktp-paper">' + kktpPaperHtml() + '</div>' +
+  '</div>';
+}
+function kktpNilai(r){ return Math.round(((Number(r.kompleksitas)||0) + (Number(r.dayaDukung)||0) + (Number(r.intake)||0)) / 3 * 10) / 10; }
+function kktpRowHtml(r,i){
+  return '<tr id="kktp-row-' + r.id + '">' +
+    '<td class="num">' + (i+1) + '</td>' +
+    '<td><textarea class="ta" rows="2" placeholder="Peserta didik mencapai..." oninput="onKktpChange(\'' + r.id + '\',\'capaian\',this.value)">' + esc(r.capaian) + '</textarea></td>' +
+    '<td><textarea class="ta" rows="2" placeholder="Peserta didik mampu..." oninput="onKktpChange(\'' + r.id + '\',\'tujuan\',this.value)">' + esc(r.tujuan) + '</textarea></td>' +
+    '<td><input class="ti" type="number" min="0" max="100" value="' + esc(r.kompleksitas) + '" oninput="onKktpChange(\'' + r.id + '\',\'kompleksitas\',this.value)" /></td>' +
+    '<td><input class="ti" type="number" min="0" max="100" value="' + esc(r.dayaDukung) + '" oninput="onKktpChange(\'' + r.id + '\',\'dayaDukung\',this.value)" /></td>' +
+    '<td><input class="ti" type="number" min="0" max="100" value="' + esc(r.intake) + '" oninput="onKktpChange(\'' + r.id + '\',\'intake\',this.value)" /></td>' +
+    '<td class="nilai-cell" id="kktp-nilai-' + r.id + '">' + kktpNilai(r) + '</td>' +
+    '<td><button class="icon-btn danger" onclick="delKktpRow(\'' + r.id + '\')">' + ICON.trash + '</button></td>' +
+  '</tr>';
+}
+function kktpPaperHtml(){
+  const id = STATE.identitas, rows = STATE.kktp;
+  const nilaiList = rows.map(kktpNilai);
+  const rata = nilaiList.length ? Math.round((nilaiList.reduce((a,b)=>a+b,0) / nilaiList.length) * 10) / 10 : 0;
+  return kopHtml('ANALISIS KKTP (KRITERIA KETERCAPAIAN TUJUAN PEMBELAJARAN)', 'Mata Pelajaran: ' + (id.mapel||'-') + ' · Fase ' + id.fase + ' / Kelas ' + id.kelas + ' · TA ' + id.tapel) +
+    '<table class="print-table"><thead><tr><th>No</th><th>Capaian Kompetensi</th><th>Tujuan Pembelajaran</th><th>Kompleksitas</th><th>Daya Dukung</th><th>Intake</th><th>Nilai</th><th>Kategori</th></tr></thead><tbody>' +
+    rows.map((r,i) => { const n = kktpNilai(r); return '<tr><td class="num">' + (i+1) + '</td><td>' + nl2br(r.capaian) + '</td><td>' + nl2br(r.tujuan) + '</td><td class="num">' + esc(r.kompleksitas) + '</td><td class="num">' + esc(r.dayaDukung) + '</td><td class="num">' + esc(r.intake) + '</td><td class="num">' + n + '</td><td>' + kategoriKktp(n) + '</td></tr>'; }).join('') +
+    '</tbody><tfoot><tr><td colspan="6" class="tf-label">Rata-rata KKTP Mata Pelajaran</td><td class="num tf-value">' + rata + '</td><td>' + kategoriKktp(rata) + '</td></tr></tfoot></table>' +
+    signBlockHtml('ANALISIS KKTP');
+}
+function onKktpChange(id, key, val){
+  const r = STATE.kktp.find(x => x.id === id); if (!r) return;
+  r[key] = val; save();
+  const cell = document.getElementById('kktp-nilai-' + id);
+  if (cell) cell.textContent = kktpNilai(r);
+  refreshPreview('kktp-paper');
+}
+function addKktpRow(){ STATE.kktp.push(emptyKktpRow()); save(); renderView(); }
+function delKktpRow(id){ STATE.kktp = STATE.kktp.filter(r => r.id !== id); save(); renderView(); }
+
+/* ============================== KISI-KISI SOAL ============================== */
+
+function viewKisi(){
+  const h = STATE.kisiHeader, rows = STATE.kisi;
+  return '<div class="view">' +
+    viewHead('Dokumen 6','Kisi-Kisi Soal','Susun kisi-kisi ujian jenjang SMA: materi, indikator soal, level kognitif, bentuk soal, dan sebaran nomor.') +
+    '<div class="panel no-print">' +
+      '<div class="panel-title">Informasi Ujian</div>' +
+      '<div class="form-grid cols-4">' +
+        field('Jenis Penilaian', selectHtml(JENIS_PENILAIAN_UJIAN, h.jenisPenilaian, "onKisiHeaderChange('jenisPenilaian',this.value)")) +
+        field('Bentuk Ujian', '<input class="ti" value="' + esc(h.bentukUjian) + '" oninput="onKisiHeaderChange(\'bentukUjian\',this.value)" />') +
+        field('Alokasi Waktu', '<input class="ti" value="' + esc(h.waktuUjian) + '" oninput="onKisiHeaderChange(\'waktuUjian\',this.value)" />') +
+        field('Jumlah Soal', '<input class="ti" type="number" value="' + esc(h.jumlahSoal) + '" oninput="onKisiHeaderChange(\'jumlahSoal\',this.value)" />') +
+      '</div>' +
+      '<div class="panel-title spaced">Butir Kisi-Kisi</div>' +
+      '<div class="table-wrap"><table class="edit-table"><thead><tr>' +
+        '<th style="width:32px">No</th><th>Elemen</th><th>Tujuan Pembelajaran</th><th>Indikator Soal</th>' +
+        '<th style="width:150px">Level Kognitif</th><th style="width:130px">Bentuk Soal</th><th style="width:60px">Jml</th><th style="width:70px">No. Soal</th><th style="width:36px"></th>' +
+      '</tr></thead><tbody id="kisi-tbody">' + rows.map((r,i) => kisiRowHtml(r,i)).join('') + '</tbody></table></div>' +
+      '<button class="btn btn-outline" onclick="addKisiRow()">' + ICON.plus + ' Tambah Baris</button>' +
+    '</div>' +
+    '<div class="paper print-area" id="kisi-paper">' + kisiPaperHtml() + '</div>' +
+  '</div>';
+}
+function kisiRowHtml(r,i){
+  return '<tr id="kisi-row-' + r.id + '">' +
+    '<td class="num">' + (i+1) + '</td>' +
+    '<td><textarea class="ta" rows="2" oninput="onKisiChange(\'' + r.id + '\',\'materi\',this.value)">' + esc(r.materi) + '</textarea></td>' +
+    '<td><textarea class="ta" rows="2" placeholder="Peserta didik mampu..." oninput="onKisiChange(\'' + r.id + '\',\'tujuan\',this.value)">' + esc(r.tujuan) + '</textarea></td>' +
+    '<td><textarea class="ta" rows="2" placeholder="Disajikan..., peserta didik dapat..." oninput="onKisiChange(\'' + r.id + '\',\'indikator\',this.value)">' + esc(r.indikator) + '</textarea></td>' +
+    '<td>' + selectHtml(LEVEL_KOGNITIF, r.level, "onKisiChange('" + r.id + "','level',this.value)") + '</td>' +
+    '<td>' + selectHtml(BENTUK_SOAL, r.bentuk, "onKisiChange('" + r.id + "','bentuk',this.value)") + '</td>' +
+    '<td><input class="ti cell-small" type="number" value="' + esc(r.jml) + '" oninput="onKisiChange(\'' + r.id + '\',\'jml\',this.value)" /></td>' +
+    '<td><input class="ti cell-small" value="' + esc(r.nomor) + '" oninput="onKisiChange(\'' + r.id + '\',\'nomor\',this.value)" /></td>' +
+    '<td><button class="icon-btn danger" onclick="delKisiRow(\'' + r.id + '\')">' + ICON.trash + '</button></td>' +
+  '</tr>';
+}
+function kisiPaperHtml(){
+  const id = STATE.identitas, h = STATE.kisiHeader, rows = STATE.kisi;
+  return kopHtml('KISI-KISI SOAL', (id.mapel||'-') + ' · Fase ' + id.fase + ' / Kelas ' + id.kelas + ' · TA ' + id.tapel) +
+    '<table class="info-table"><tbody>' +
+      '<tr><td>Jenis Penilaian</td><td>' + esc(h.jenisPenilaian) + '</td><td>Bentuk Ujian</td><td>' + esc(h.bentukUjian) + '</td></tr>' +
+      '<tr><td>Alokasi Waktu</td><td>' + esc(h.waktuUjian) + '</td><td>Jumlah Soal</td><td>' + esc(h.jumlahSoal) + '</td></tr>' +
+    '</tbody></table>' +
+    '<table class="print-table small"><thead><tr><th>No</th><th>Elemen</th><th>Tujuan Pembelajaran</th><th>Indikator Soal</th><th>Level</th><th>Bentuk</th><th>Jml</th><th>No. Soal</th></tr></thead><tbody>' +
+    rows.map((r,i) => '<tr><td class="num">' + (i+1) + '</td><td>' + nl2br(r.materi) + '</td><td>' + nl2br(r.tujuan) + '</td><td>' + nl2br(r.indikator) + '</td><td>' + esc(r.level) + '</td><td>' + esc(r.bentuk) + '</td><td class="num">' + esc(r.jml) + '</td><td class="num">' + esc(r.nomor) + '</td></tr>').join('') +
+    '</tbody></table>' + signBlockHtml('KISI-KISI SOAL');
+}
+function onKisiHeaderChange(key, val){ STATE.kisiHeader[key] = val; save(); refreshPreview('kisi-paper'); }
+function onKisiChange(id, key, val){
+  const r = STATE.kisi.find(x => x.id === id); if (!r) return;
+  r[key] = val; save(); refreshPreview('kisi-paper');
+}
+function addKisiRow(){ STATE.kisi.push(emptyKisiRow()); save(); renderView(); }
+function delKisiRow(id){ STATE.kisi = STATE.kisi.filter(r => r.id !== id); save(); renderView(); }
+
+/* ============================== RUBRIK PENILAIAN ============================== */
+
+function viewRubrik(){
+  const list = STATE.rubrikList;
+  if (!ACTIVE_RUBRIK_ID || !list.find(r => r.id === ACTIVE_RUBRIK_ID)) ACTIVE_RUBRIK_ID = list[0].id;
+  const rub = list.find(r => r.id === ACTIVE_RUBRIK_ID);
+
+  return '<div class="view">' +
+    viewHead('Dokumen 7','Rubrik Penilaian','Susun rubrik penilaian kinerja, proyek, produk, atau presentasi dengan deskriptor tiap level skor.') +
+    '<div class="list-layout">' +
+      '<div class="side-list no-print">' +
+        '<div class="side-list-head"><span>Daftar Rubrik</span><button class="icon-btn" onclick="addRubrik()">' + ICON.plus + '</button></div>' +
+        '<div id="rubrik-list-items">' + list.map(r => rubrikListItemHtml(r)).join('') + '</div>' +
+      '</div>' +
+      '<div class="modul-main">' +
+        '<div id="rubrik-editor">' + rubrikEditorHtml(rub) + '</div>' +
+        '<div class="paper print-area" id="rubrik-paper">' + rubrikPaperHtml(rub) + '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+function rubrikListItemHtml(r){
+  const active = r.id === ACTIVE_RUBRIK_ID;
+  return '<div class="list-item ' + (active?'active':'') + '" onclick="selectRubrik(\'' + r.id + '\')">' + ICON.rubric +
+    '<span class="list-item-title">' + esc(r.judul || 'Tanpa judul') + '</span>' +
+    '<div class="list-item-actions">' +
+      '<button class="icon-btn xs" title="Duplikat" onclick="event.stopPropagation(); duplicateRubrik(\'' + r.id + '\')">' + ICON.copy + '</button>' +
+      (STATE.rubrikList.length > 1 ? '<button class="icon-btn xs danger" title="Hapus" onclick="event.stopPropagation(); delRubrik(\'' + r.id + '\')">' + ICON.trash + '</button>' : '') +
+    '</div></div>';
+}
+function rubrikEditorHtml(r){
+  return '<div class="panel no-print">' +
+    '<div class="panel-title">Judul Rubrik</div>' +
+    '<input class="ti" value="' + esc(r.judul) + '" placeholder="Rubrik Penilaian Presentasi Kelompok" oninput="onRubrikChange(\'judul\',this.value)" />' +
+    '<div class="form-grid" style="margin-top:14px">' +
+      field('Jenis Penilaian', selectHtml(JENIS_RUBRIK, r.jenisPenilaian, "onRubrikChange('jenisPenilaian',this.value)")) +
+      field('Nama Tugas / Aktivitas', '<input class="ti" value="' + esc(r.tugas) + '" oninput="onRubrikChange(\'tugas\',this.value)" />') +
+      field('Petunjuk Penskoran', '<input class="ti" value="' + esc(r.petunjuk) + '" oninput="onRubrikChange(\'petunjuk\',this.value)" />', true) +
+    '</div>' +
+    '<div class="panel-title spaced">Kriteria &amp; Deskriptor</div>' +
+    '<div class="kriteria-list" id="kriteria-list">' + r.kriteria.map(k => kriteriaRowHtml(k)).join('') + '</div>' +
+    '<button class="btn btn-outline" onclick="addKriteria()">' + ICON.plus + ' Tambah Kriteria</button>' +
+  '</div>';
+}
+function kriteriaRowHtml(k){
+  const cell = (label, key, val) => '<div class="field"><span class="field-label">' + label + '</span>' +
+    '<textarea class="ta" rows="3" oninput="onKriteriaChange(\'' + k.id + '\',\'' + key + '\',this.value)">' + esc(val) + '</textarea></div>';
+  return '<div class="kriteria-row" id="krit-' + k.id + '">' +
+    '<div class="field"><span class="field-label">Aspek Penilaian</span><textarea class="ta" rows="3" oninput="onKriteriaChange(\'' + k.id + '\',\'aspek\',this.value)">' + esc(k.aspek) + '</textarea></div>' +
+    cell('Skor 4 (Sangat Baik)','s4',k.s4) +
+    cell('Skor 3 (Baik)','s3',k.s3) +
+    cell('Skor 2 (Cukup)','s2',k.s2) +
+    cell('Skor 1 (Perlu Bimbingan)','s1',k.s1) +
+    '<button class="icon-btn danger" onclick="delKriteria(\'' + k.id + '\')" style="align-self:start">' + ICON.trash + '</button>' +
+  '</div>';
+}
+function rubrikPaperHtml(r){
+  const id = STATE.identitas;
+  return kopHtml('RUBRIK PENILAIAN', r.judul + ' · ' + r.jenisPenilaian) +
+    '<table class="info-table"><tbody>' +
+      '<tr><td>Mata Pelajaran</td><td>' + esc(id.mapel||'-') + '</td><td>Kelas</td><td>' + esc(id.kelas) + '</td></tr>' +
+      '<tr><td>Nama Tugas/Aktivitas</td><td colspan="3">' + esc(r.tugas||'-') + '</td></tr>' +
+    '</tbody></table>' +
+    '<table class="print-table small"><thead><tr><th>Aspek Penilaian</th><th>Skor 4<br/>Sangat Baik</th><th>Skor 3<br/>Baik</th><th>Skor 2<br/>Cukup</th><th>Skor 1<br/>Perlu Bimbingan</th></tr></thead><tbody>' +
+    r.kriteria.map(k => '<tr><td><b>' + nl2br(k.aspek) + '</b></td><td>' + nl2br(k.s4) + '</td><td>' + nl2br(k.s3) + '</td><td>' + nl2br(k.s2) + '</td><td>' + nl2br(k.s1) + '</td></tr>').join('') +
+    '</tbody></table>' +
+    '<p><b>Pedoman Penskoran:</b> ' + esc(r.petunjuk) + '</p>' +
+    signBlockHtml('RUBRIK PENILAIAN - ' + r.judul);
+}
+function currentRubrik(){ return STATE.rubrikList.find(r => r.id === ACTIVE_RUBRIK_ID); }
+function onRubrikChange(key, val){
+  const r = currentRubrik(); if (!r) return;
+  r[key] = val; save(); refreshPreview('rubrik-paper');
+  if (key === 'judul'){
+    const item = document.querySelector('#rubrik-list-items .list-item.active .list-item-title');
+    if (item) item.textContent = val || 'Tanpa judul';
+  }
+}
+function onKriteriaChange(id, key, val){
+  const r = currentRubrik(); if (!r) return;
+  const k = r.kriteria.find(x => x.id === id); if (!k) return;
+  k[key] = val; save(); refreshPreview('rubrik-paper');
+}
+function addKriteria(){ const r = currentRubrik(); r.kriteria.push(emptyKriteria()); save(); renderView(); }
+function delKriteria(id){ const r = currentRubrik(); r.kriteria = r.kriteria.filter(k => k.id !== id); save(); renderView(); }
+function selectRubrik(id){ ACTIVE_RUBRIK_ID = id; renderView(); }
+function addRubrik(){ const r = emptyRubrik(); STATE.rubrikList.push(r); ACTIVE_RUBRIK_ID = r.id; save(); renderView(); }
+function delRubrik(id){
+  STATE.rubrikList = STATE.rubrikList.filter(r => r.id !== id);
+  if (STATE.rubrikList.length === 0) STATE.rubrikList.push(emptyRubrik());
+  if (ACTIVE_RUBRIK_ID === id) ACTIVE_RUBRIK_ID = STATE.rubrikList[0].id;
+  save(); renderView();
+}
+function duplicateRubrik(id){
+  const src = STATE.rubrikList.find(r => r.id === id);
+  const copy = JSON.parse(JSON.stringify(src));
+  copy.id = uid(); copy.judul = src.judul + ' (Salinan)';
+  copy.kriteria = copy.kriteria.map(k => Object.assign({}, k, { id: uid() }));
+  STATE.rubrikList.push(copy); ACTIVE_RUBRIK_ID = copy.id; save(); renderView();
+}
+
+/* ============================== PREVIEW REFRESH (tanpa full re-render) ============================== */
+
+function refreshPreview(paperId){
+  const el = document.getElementById(paperId);
+  if (!el) return;
+  const map = {
+    'kalender-paper': kalenderPaperHtml,
+    'prota-paper': protaPaperHtml, 'promes-paper': () => promesPaperHtml(SEMESTER==='Ganjil'?BULAN_GANJIL:BULAN_GENAP),
+    'modul-paper': () => modulPaperHtml(currentModul()), 'kktp-paper': kktpPaperHtml,
+    'kisi-paper': kisiPaperHtml, 'rubrik-paper': () => rubrikPaperHtml(currentRubrik()),
+  };
+  if (map[paperId]) el.innerHTML = map[paperId]();
+}
+
+/* ============================== INIT ============================== */
+
+load();
+renderShell();
+</script>
+</body>
+</html>
